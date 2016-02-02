@@ -48,7 +48,7 @@ export default Ember.Component.extend({
       display: 'Number'
     },
     {
-      name   : 'artist',
+      name   : 'name',
       display: 'Artist'
     },
     {
@@ -64,8 +64,9 @@ export default Ember.Component.extend({
       display: 'Played'
     },
     {
-      name   : 'length',
-      display: 'Length'
+      name   : 'duration',
+      display: 'Length',
+      format: 'duration'
     }
   ],
   formats       : {
@@ -128,18 +129,29 @@ export default Ember.Component.extend({
     return this.buildItems('artistColumns', this.get('model.artists'));
   }),
   albums        : Ember.computed('model.artists', 'artistSelected', function () {
-    var artist = this.get('artistHash.' + this.get('artistSelected'));
+    var artist = this.get('artistHash')[this.get('artistSelected')];
     if (artist) {
       return this.buildItems('albumColumns', artist.albums);
     }
   }),
   tracks        : Ember.computed('model.artists', 'artistSelected','albumSelected', function () {
-    var album = this.get('artistHash.' + this.get('artistSelected') + '.albumsHash.' + this.get('albumSelected'));
-    console.log(this.get('artistHash.' + this.get('artistSelected')));
-    console.log(this.get('albumSelected'));
-    console.log(album);
-    if (album) {
-      return this.buildItems('trackColumns', album.tracks);
+    var artistSelected = this.get('artistSelected'),
+        albumSelected = this.get('albumSelected');
+    if(artistSelected && albumSelected) {
+      var album = this.recursiveLookup(this.get('artistHash'),
+        [artistSelected, 'albumsHash', albumSelected]);
+      if (album) {
+        return this.buildItems('trackColumns', album.tracks);
+      }
     }
-  })
+  }),
+  recursiveLookup(obj,keys) {
+    var r = obj;
+    _.map(keys,k => {
+      if(r[k]) {
+        r = r[k];
+      }
+    });
+    return r;
+  }
 });
