@@ -20,9 +20,14 @@ body, html {
   overflow: hidden;
 }
 
+.media-browser-section thead,
+.media-browser-section tbody {
+  /*display:block;*/
+}
+
 .browser-table {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   border: 1px solid black;
   padding: 0;
 }

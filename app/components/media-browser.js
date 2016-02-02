@@ -48,16 +48,20 @@ export default Ember.Component.extend({
       display: 'Number'
     },
     {
-      name   : 'name',
+      name   : 'artist.name',
       display: 'Artist'
     },
     {
-      name   : 'album',
+      name   : 'album.name',
       display: 'Album'
     },
     {
-      name   : 'track',
+      name   : 'name',
       display: 'Track'
+    },
+    {
+      name   : 'album.year',
+      display: 'Year'
     },
     {
       name   : 'played',
@@ -66,12 +70,23 @@ export default Ember.Component.extend({
     {
       name   : 'duration',
       display: 'Length',
-      format: 'duration'
+      format : 'duration'
     }
   ],
   formats       : {
     duration: function (d) {
-      return moment(d).format('mm:ss');
+      function pad(num) {
+        if(num < 10) {
+          return '0' + num;
+        }
+        return num;
+      }
+      var m = moment.duration(d),
+          d = pad(m.minutes())+ ':' + pad(m.seconds());
+      if(m.hours() >= 1) {
+        d = m.hours() + ':' + d;
+      }
+      return d;
     }
   },
   actions       : {
@@ -80,6 +95,9 @@ export default Ember.Component.extend({
     },
     albumClicked(album) {
       this.set('albumSelected', album);
+    },
+    trackClicked(track) {
+      console.log(track);
     }
   },
   artistHeaders : Ember.computed('artistColumns', function () {
@@ -98,12 +116,13 @@ export default Ember.Component.extend({
       return 0;
     });
   },
-  buildItems(columnsKey, data) {
+  buildItems(columnsKey, data, sortBy) {
     var columns = this.get(columnsKey);
-    return _.map(this.sorted(data, 'name'), artist => {
+    return _.map(this.sorted(data, sortBy), artist => {
       var item = _.map(columns, column => {
-        if (artist[column.name]) {
-          var n = artist[column.name];
+        var value = _.get(artist, column.name);
+        if (value) {
+          var n = value;
           if (column.format && _.isFunction(this.get('formats.' + column.format))) {
             n = this.get('formats.' + column.format)(n);
           }
@@ -120,38 +139,36 @@ export default Ember.Component.extend({
   artistSelected: null,
   albumSelected : null,
   artistHash    : Ember.computed('model.artists', function () {
-    return _.indexBy(_.map(this.get('model.artists'),artist => {
-      artist.albumsHash = _.indexBy(artist.albums,'name');
+    return _.indexBy(_.map(this.get('model.artists'), artist => {
+      artist.albumsHash = _.indexBy(artist.albums, 'name');
+      _.map(artist.albumsHash, album => {
+        album.artist = artist;
+        _.map(album.tracks, track => {
+          track.artist = artist;
+          track.album  = album;
+        });
+      });
       return artist;
     }), 'name');
   }),
   artists       : Ember.computed('model.artists', function () {
-    return this.buildItems('artistColumns', this.get('model.artists'));
+    return this.buildItems('artistColumns', this.get('model.artists'),'name');
   }),
   albums        : Ember.computed('model.artists', 'artistSelected', function () {
     var artist = this.get('artistHash')[this.get('artistSelected')];
     if (artist) {
-      return this.buildItems('albumColumns', artist.albums);
+      return this.buildItems('albumColumns', artist.albums,'year');
     }
   }),
-  tracks        : Ember.computed('model.artists', 'artistSelected','albumSelected', function () {
+  tracks        : Ember.computed('model.artists', 'artistSelected', 'albumSelected', function () {
     var artistSelected = this.get('artistSelected'),
-        albumSelected = this.get('albumSelected');
-    if(artistSelected && albumSelected) {
-      var album = this.recursiveLookup(this.get('artistHash'),
+        albumSelected  = this.get('albumSelected');
+    if (artistSelected && albumSelected) {
+      var album = _.get(this.get('artistHash'),
         [artistSelected, 'albumsHash', albumSelected]);
       if (album) {
-        return this.buildItems('trackColumns', album.tracks);
+        return this.buildItems('trackColumns', album.tracks,'trackNum');
       }
     }
-  }),
-  recursiveLookup(obj,keys) {
-    var r = obj;
-    _.map(keys,k => {
-      if(r[k]) {
-        r = r[k];
-      }
-    });
-    return r;
-  }
+  })
 });
