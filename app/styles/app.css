@@ -7,12 +7,12 @@ body,html {
 }
 
 .media-player{
-    height: 20%;
+    height: 15%;
     background-color: gray;
 }
 
 .media-browser {
-    height: 80%;
+    height: 85%;
 }
 
 .media-browser-section {
@@ -22,9 +22,9 @@ body,html {
 }
 
 .artist-section {
-    /*height: 50%;*/
-    /*overflow: auto;*/
     border: 1px solid black;
+    height: 100%;
+    overflow-y: scroll;
 }
 
 .all-height {
