@@ -8,5 +8,10 @@ export default Ember.Component.extend({
       if(a.name > b.name) return 1;
       return 0;
     });
-  })
+  }),
+  actions: {
+    itemClicked(id) {
+      this.sendAction('action',id);
+    }
+  }
 });

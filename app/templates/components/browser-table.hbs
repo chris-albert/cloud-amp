@@ -1,16 +1,18 @@
-<table class="table table-hover">
+<table class="table">
+    <thead>
     <tr>
-        <th>Artist</th>
-        <th>Albums</th>
-        <th>Tracks</th>
-        <th>Length</th>
+      {{#each headers as |header|}}
+          <th>{{header}}</th>
+      {{/each}}
     </tr>
-    {{#each sortedArtists as |artist|}}
-        <tr>
-            <td>{{artist.name}}</td>
-            <td>{{artist.albumsCount}}</td>
-            <td>{{artist.tracksCount}}</td>
-            <td>{{time-format time=artist.duration}}</td>
+    </thead>
+    <tbody>
+    {{#each items as |item|}}
+        <tr class="browser-table-item" {{action "itemClicked" item.id}}>
+          {{#each item.values as |column|}}
+              <td>{{column}}</td>
+          {{/each}}
         </tr>
     {{/each}}
+    </tbody>
 </table>
