@@ -1,0 +1,16 @@
+<table class="table table-hover">
+    <tr>
+        <th>Artist</th>
+        <th>Albums</th>
+        <th>Tracks</th>
+        <th>Length</th>
+    </tr>
+    {{#each sortedArtists as |artist|}}
+        <tr>
+            <td>{{artist.name}}</td>
+            <td>{{artist.albumsCount}}</td>
+            <td>{{artist.tracksCount}}</td>
+            <td>{{time-format time=artist.duration}}</td>
+        </tr>
+    {{/each}}
+</table>

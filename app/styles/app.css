@@ -1,0 +1,33 @@
+body,html {
+    height: 100%;
+}
+
+.main-container {
+    height: 100%;
+}
+
+.media-player{
+    height: 20%;
+    background-color: gray;
+}
+
+.media-browser {
+    height: 80%;
+}
+
+.media-browser-section {
+    height: 50%;
+    overflow: hidden;
+    border: 1px solid red;
+}
+
+.artist-section {
+    /*height: 50%;*/
+    /*overflow: auto;*/
+    border: 1px solid black;
+}
+
+.all-height {
+    position: relative;
+    height: 100%;
+}
