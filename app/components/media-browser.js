@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import _ from 'lodash';
+import config from 'cloud-amp/config/environment';
 
 export default Ember.Component.extend({
   classNames    : ['media-browser'],

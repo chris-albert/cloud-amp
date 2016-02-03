@@ -193,3 +193,19 @@ body {
 .details-spec .detail-light {
     color: #5B6B72;
 }
+
+/*
+  Playlist details styles
+*/
+.playlist-details {
+
+    margin-top: 5px;
+    height: 100%;
+}
+
+.playlist-details .row {
+    background-color: #0A0A0A;
+    height: 100%;
+    margin-left: 0px;
+    margin-right: -10px;
+}

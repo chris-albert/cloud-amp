@@ -1,5 +1,90 @@
 /* jshint node: true */
 
+var columns = {
+  artist : [
+    {
+      name   : 'name',
+      display: 'Artist'
+    },
+    {
+      name   : 'albumsCount',
+      display: 'Albums'
+    },
+    {
+      name   : 'tracksCount',
+      display: 'Tracks'
+    },
+    {
+      name   : 'played',
+      display: 'Played'
+    },
+    {
+      name   : 'duration',
+      display: 'Length',
+      format : 'duration'
+    }
+  ],
+  album  : [
+    {
+      name   : 'name',
+      display: 'Album'
+    },
+    {
+      name   : 'year',
+      display: 'Year'
+    },
+    {
+      name   : 'played',
+      display: 'Played'
+    },
+    {
+      name   : 'tracksCount',
+      display: 'Tracks'
+    },
+    {
+      name   : 'duration',
+      display: 'Length',
+      format : 'duration'
+    }
+  ],
+  track  : [
+    {
+      name   : 'trackNum',
+      display: 'Track Number'
+    },
+    {
+      name   : 'artist.name',
+      display: 'Artist'
+    },
+    {
+      name   : 'album.name',
+      display: 'Album'
+    },
+    {
+      name   : 'name',
+      display: 'Track'
+    },
+    {
+      name   : 'album.year',
+      display: 'Year'
+    },
+    {
+      name   : 'genre',
+      display: 'Genre'
+    },
+    {
+      name   : 'played',
+      display: 'Played'
+    },
+    {
+      name   : 'duration',
+      display: 'Length',
+      format : 'duration'
+    }
+  ]
+};
+
+
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'cloud-amp',
@@ -16,7 +101,8 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+    columns: columns
   };
 
   if (environment === 'development') {
