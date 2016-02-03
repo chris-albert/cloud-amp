@@ -28,6 +28,7 @@ body {
 
 .media-player {
   height: 13%;
+    margin-bottom: 10px;
 }
 
 .media-browser {
@@ -97,6 +98,7 @@ body {
 .player-container {
     height: 100%;
     margin-left: 0;
+    padding-left: 10px;
 }
 
 .player-container .now-playing {
@@ -154,4 +156,40 @@ body {
 
 .player-container .progress-bar {
     background-color: #8D989D;
+}
+
+/*
+  Now Playing styles
+*/
+
+.now-playing-details {
+    background-color: #0A0A0A;
+    margin-top: 5px;
+    height: 100%;
+}
+
+.now-playing-details .row {
+    height: 100%;
+}
+
+.album-art-column {
+    height: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.album-art-img {
+    height: 100%;
+    width: 100%;
+}
+
+.details-spec {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: #9CBACA;
+    font-size: 12px
+}
+
+.details-spec .detail-light {
+    color: #5B6B72;
 }
