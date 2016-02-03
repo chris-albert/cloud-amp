@@ -3,7 +3,6 @@ import _ from 'lodash';
 
 export default Ember.Component.extend({
   classNames    : ['media-browser'],
-  nestSplit     : '==>',
   artistColumns : [
     {
       name   : 'name',
@@ -16,6 +15,10 @@ export default Ember.Component.extend({
     {
       name   : 'tracksCount',
       display: 'Tracks'
+    },
+    {
+      name   : 'played',
+      display: 'Played'
     },
     {
       name   : 'duration',
@@ -31,6 +34,10 @@ export default Ember.Component.extend({
     {
       name   : 'year',
       display: 'Year'
+    },
+    {
+      name   : 'played',
+      display: 'Played'
     },
     {
       name   : 'tracksCount',
@@ -62,6 +69,10 @@ export default Ember.Component.extend({
     {
       name   : 'album.year',
       display: 'Year'
+    },
+    {
+      name   : 'genre',
+      display: 'Genre'
     },
     {
       name   : 'played',
