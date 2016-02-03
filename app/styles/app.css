@@ -2,6 +2,17 @@ body, html {
   height: 100%;
 }
 
+/*
+ background/divider: 9,10,10 - 090A0A
+ border: 38,42,42 - 262A2A
+ table header: 57,59,60 - 393B3C
+ table header text: 200,200,200 - C8C8C8
+ table header border: 81,84,85 - 515455
+ table header border vertical: 24,26,26 - 181A1A
+ text color: 129,159,171 - 819FAB
+*/
+
+
 .main-container {
   height: 100%;
 }
@@ -18,11 +29,6 @@ body, html {
 .media-browser-section {
   height: 50%;
   overflow: hidden;
-}
-
-.media-browser-section thead,
-.media-browser-section tbody {
-  /*display:block;*/
 }
 
 .browser-table {
