@@ -3,39 +3,76 @@ body, html {
 }
 
 /*
- background/divider: 9,10,10 - 090A0A
+ list background/divider: 9,10,10 - 090A0A
+ list background alt: 12,12,13 - 0C0C0D
+ list color: 129,159,171 - 819FAB
+ list hover color: 32,34,44 - 20222C
+ list hover text color: 200,200,200 - C8C8C8
  border: 38,42,42 - 262A2A
  table header: 57,59,60 - 393B3C
  table header text: 200,200,200 - C8C8C8
  table header border: 81,84,85 - 515455
  table header border vertical: 24,26,26 - 181A1A
- text color: 129,159,171 - 819FAB
 */
 
+body {
+    background-color: #232629;
+}
 
 .main-container {
   height: 100%;
+    margin: 5px;
+    margin-bottom: 10px;
+    background-color: #232629;
 }
 
 .media-player {
-  height: 15%;
-  background-color: gray;
+  height: 12%;
 }
 
 .media-browser {
-  height: 85%;
+  height:86%;
 }
 
 .media-browser-section {
   height: 50%;
-  overflow: hidden;
 }
 
 .browser-table {
   height: 100%;
   overflow-y: auto;
-  border: 1px solid black;
+  border: 5px solid #262A2A;
   padding: 0;
+  font-size: 12px;
+}
+
+.browser-table table {
+    border-collapse: collapse;
+    margin-bottom: 0;
+}
+
+.browser-table table thead tr th {
+    font-weight: normal;
+    line-height: 4px;
+    border-top: 1px solid #515455 !important;
+    border-left: 1px solid #515455;
+    border-bottom: 1px solid #2C2E2F;
+    border-right: 1px solid #181A1A;
+}
+
+.browser-table table tbody tr td {
+    border-top: 0;
+    line-height: 4px;
+}
+
+.browser-table thead {
+    background-color: #393B3C;
+    color: #C8C8C8;
+}
+
+.browser-table {
+    background-color: #090A0A;
+    color: #819FAB;
 }
 
 .all-height {
@@ -43,7 +80,12 @@ body, html {
   height: 100%;
 }
 
+.browser-table-item:nth-child(even) {
+    background-color: #0E0E0F;
+}
+
 .browser-table-item:hover {
-  background-color: gray;
+  background-color: #20222C;
+  color: #C8C8C8;
   cursor: pointer;
 }

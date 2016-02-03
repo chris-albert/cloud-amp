@@ -45,7 +45,7 @@ export default Ember.Component.extend({
   trackColumns  : [
     {
       name   : 'trackNum',
-      display: 'Number'
+      display: 'Track Number'
     },
     {
       name   : 'artist.name',
