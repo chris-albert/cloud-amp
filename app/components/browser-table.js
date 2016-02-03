@@ -12,6 +12,9 @@ export default Ember.Component.extend({
   actions: {
     itemClicked(id) {
       this.sendAction('action',id);
+    },
+    doubleClicked(id) {
+      this.sendAction('doubleClick',id);
     }
   }
 });

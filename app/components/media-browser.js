@@ -1,107 +1,15 @@
 import Ember from 'ember';
 import _ from 'lodash';
 import config from 'cloud-amp/config/environment';
+import textFormatters from '../utils/text-formatters';
 
 export default Ember.Component.extend({
   classNames    : ['media-browser'],
-  artistColumns : [
-    {
-      name   : 'name',
-      display: 'Artist'
-    },
-    {
-      name   : 'albumsCount',
-      display: 'Albums'
-    },
-    {
-      name   : 'tracksCount',
-      display: 'Tracks'
-    },
-    {
-      name   : 'played',
-      display: 'Played'
-    },
-    {
-      name   : 'duration',
-      display: 'Length',
-      format : 'duration'
-    }
-  ],
-  albumColumns  : [
-    {
-      name   : 'name',
-      display: 'Album'
-    },
-    {
-      name   : 'year',
-      display: 'Year'
-    },
-    {
-      name   : 'played',
-      display: 'Played'
-    },
-    {
-      name   : 'tracksCount',
-      display: 'Tracks'
-    },
-    {
-      name   : 'duration',
-      display: 'Length',
-      format : 'duration'
-    }
-  ],
-  trackColumns  : [
-    {
-      name   : 'trackNum',
-      display: 'Track Number'
-    },
-    {
-      name   : 'artist.name',
-      display: 'Artist'
-    },
-    {
-      name   : 'album.name',
-      display: 'Album'
-    },
-    {
-      name   : 'name',
-      display: 'Track'
-    },
-    {
-      name   : 'album.year',
-      display: 'Year'
-    },
-    {
-      name   : 'genre',
-      display: 'Genre'
-    },
-    {
-      name   : 'played',
-      display: 'Played'
-    },
-    {
-      name   : 'duration',
-      display: 'Length',
-      format : 'duration'
-    }
-  ],
-  playlist: Ember.inject.service('playlist'),
-  formats       : {
-    duration: function (d) {
-      function pad(num) {
-        if(num < 10) {
-          return '0' + num;
-        }
-        return num;
-      }
-      var m = moment.duration(d),
-          d = pad(m.minutes())+ ':' + pad(m.seconds());
-      if(m.hours() >= 1) {
-        d = m.hours() + ':' + d;
-      }
-      return d;
-    }
-  },
+  artistColumns : config.columns.artist,
+  albumColumns  : config.columns.album,
+  trackColumns  : config.columns.track,
+  playlist      : Ember.inject.service('playlist'),
+  formats       : textFormatters,
   actions       : {
     artistClicked(artist) {
       this.set('artistSelected', artist);
@@ -109,9 +17,22 @@ export default Ember.Component.extend({
     albumClicked(album) {
       this.set('albumSelected', album);
     },
+    albumDoubleClicked(album) {
+      var playlist = this.get('playlist');
+      _.map(this.findAlbum(album).tracks,track => {
+        playlist.addTrack(track);
+      });
+    },
     trackClicked(track) {
       this.get('playlist').addTrack(this.findTrack(track));
     }
+  },
+  findAlbum(album) {
+    return _.get(this.get('artistHash'),[
+      this.get('artistSelected'),
+      'albumsHash',
+      album
+    ]);
   },
   findTrack(track) {
     return _.get(this.get('artistHash'),[

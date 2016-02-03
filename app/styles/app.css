@@ -64,6 +64,8 @@ body {
 .browser-table table tbody tr td {
     border-top: 0;
     line-height: 4px;
+    overflow: hidden;
+    white-space:nowrap
 }
 
 .browser-table thead {
@@ -89,6 +91,11 @@ body {
   background-color: #20222C;
   color: #C8C8C8;
   cursor: pointer;
+}
+
+.browser-table-item.playing {
+    background-color: #20222C;
+    color: #C8C8C8;
 }
 
 /*

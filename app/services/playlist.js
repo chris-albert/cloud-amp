@@ -3,11 +3,13 @@ import Ember from 'ember';
 export default Ember.Service.extend({
   tracks: null,
   currentPosition: 0,
+  tracksChanged: false,
   init() {
     this.set('tracks',[]);
   },
   addTrack(track) {
     this.get('tracks').push(track);
+    this.notifyPropertyChange('tracks');
   },
   getCurrentTrack() {
     var track = this.get('tracks')[this.get('currentPosition')];

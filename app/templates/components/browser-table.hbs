@@ -1,4 +1,5 @@
 <table class="table">
+    {{#if headers}}
     <thead>
     <tr>
       {{#each headers as |header|}}
@@ -6,9 +7,11 @@
       {{/each}}
     </tr>
     </thead>
+    {{/if}}
     <tbody>
     {{#each items as |item|}}
-        <tr class="browser-table-item" {{action "itemClicked" item.id}}>
+        <tr class="browser-table-item {{item.class}}" {{action "itemClicked" item.id}}
+          {{action "doubleClicked" item.id on="doubleClick" }}>
           {{#each item.values as |column|}}
               <td>{{column}}</td>
           {{/each}}

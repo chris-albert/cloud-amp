@@ -1,5 +1,19 @@
 import Ember from 'ember';
 
+var FakePlayer = Ember.Object.extend({
+  autoplay: false,
+  src: null,
+  play() {
+    console.debug('Fake player play [' + this.get('src') + ']');
+  },
+  pause() {
+    console.debug('Fake player pause');
+  },
+  fastSeek(seekTo) {
+    console.debug('Fake player fastSeek [' + seekTo + ']');
+  }
+});
+
 export default Ember.Service.extend({
   playlist: Ember.inject.service('playlist'),
   audio: null,
@@ -7,10 +21,11 @@ export default Ember.Service.extend({
   paused: false,
   stopped: false,
   init() {
-    this.set('audio',new Audio());
+    //this.set('audio',new Audio());
+    this.set('audio',FakePlayer.create());
+    console.log(this.get('audio'));
   },
   play() {
-
     if(this.get('paused')) {
       //This means we came from being paused, so just resume
       this.set('paused', false);

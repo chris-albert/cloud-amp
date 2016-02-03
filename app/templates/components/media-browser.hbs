@@ -1,6 +1,6 @@
 <div class="row media-browser-section">
     {{browser-table items=artists headers=artistHeaders action="artistClicked" classNames="col-md-6"}}
-    {{browser-table items=albums headers=albumHeaders action="albumClicked" classNames="col-md-6"}}
+    {{browser-table items=albums headers=albumHeaders action="albumClicked" doubleClick="albumDoubleClicked" classNames="col-md-6"}}
 </div>
 <div class="row media-browser-section">
     {{browser-table items=tracks headers=trackHeaders action="trackClicked" classNames="col-md-12"}}
