@@ -26,7 +26,7 @@ body {
     background-color: #232629;
 }
 
-.media-player {
+.header-components {
   height: 13%;
     margin-bottom: 10px;
 }
@@ -95,13 +95,13 @@ body {
  Player styles
 */
 
-.player-container {
+.media-player {
     height: 100%;
     margin-left: 0;
     padding-left: 10px;
 }
 
-.player-container .now-playing {
+.media-player .now-playing {
     margin-left: 0;
     margin-top: 5px;
     margin-right: 0;
@@ -115,46 +115,46 @@ body {
     padding: 0;
 }
 
-.player-container .time {
+.media-player .time {
 
     height: 100%;
     font-size: 20px;
     padding-left: 10px;
 }
 
-.player-container .whats-playing {
+.media-player .whats-playing {
     background-color: #090A0A;
     font-size: 11px;
 }
 
-.player-container .specs {
+.media-player .specs {
     background-color: #090A0A;
     font-size: 10px;
     margin-right: 5px;
 }
 
-.player-container .eq-volume {
+.media-player .eq-volume {
     margin-left: 0px;
 }
 
-.player-container .eq {
+.media-player .eq {
     height: 30px;
     background-color: #090A0A;
 }
 
-.player-container .controls {
+.media-player .controls {
     padding: 5px;
     padding-left: 0;
 }
 
-.player-container .progress {
+.media-player .progress {
     margin-top: 5px;
     margin-bottom: 5px;
     height: 3px;
     background-color: black;
 }
 
-.player-container .progress-bar {
+.media-player .progress-bar {
     background-color: #8D989D;
 }
 

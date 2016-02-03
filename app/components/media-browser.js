@@ -109,9 +109,17 @@ export default Ember.Component.extend({
       this.set('albumSelected', album);
     },
     trackClicked(track) {
-      console.log(track);
-      this.get('playlist').addTrack(track);
+      this.get('playlist').addTrack(this.findTrack(track));
     }
+  },
+  findTrack(track) {
+    return _.get(this.get('artistHash'),[
+      this.get('artistSelected'),
+      'albumsHash',
+      this.get('albumSelected'),
+      'tracksHash',
+      track
+    ]);
   },
   artistHeaders : Ember.computed('artistColumns', function () {
     return _.map(this.get('artistColumns'), 'display');
@@ -156,6 +164,7 @@ export default Ember.Component.extend({
       artist.albumsHash = _.indexBy(artist.albums, 'name');
       _.map(artist.albumsHash, album => {
         album.artist = artist;
+        album.tracksHash = _.indexBy(album.tracks,'name');
         _.map(album.tracks, track => {
           track.artist = artist;
           track.album  = album;
