@@ -84,6 +84,7 @@ export default Ember.Component.extend({
       format : 'duration'
     }
   ],
+  playlist: Ember.inject.service('playlist'),
   formats       : {
     duration: function (d) {
       function pad(num) {
@@ -109,6 +110,7 @@ export default Ember.Component.extend({
     },
     trackClicked(track) {
       console.log(track);
+      this.get('playlist').addTrack(track);
     }
   },
   artistHeaders : Ember.computed('artistColumns', function () {
