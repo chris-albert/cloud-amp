@@ -21,6 +21,10 @@ export default Ember.Service.extend({
     }
     return new Ember.RSVP.Promise((r,e) => e(new Error('No track found')));
   },
+  clear() {
+    this.set('tracks',[]);
+    this.set('currentPosition',0);
+  },
   /**
    * Advances the playlist to the next item in list
    */

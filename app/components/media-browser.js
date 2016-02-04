@@ -18,16 +18,36 @@ export default Ember.Component.extend({
     albumClicked(album) {
       this.set('albumSelected', album);
     },
+    trackClicked(track) {
+      this.get('playlist').addTrack(this.findTrack(track));
+    },
+    artistDoubleClicked(artist) {
+      var playlist = this.get('playlist');
+      playlist.clear();
+      _.map(this.findArtist(artist).albums,albums => {
+        _.map(albums.tracks,track => {
+          playlist.addTrack(track);
+        });
+      });
+      this.get('player').play();
+    },
     albumDoubleClicked(album) {
       var playlist = this.get('playlist');
+      playlist.clear();
       _.map(this.findAlbum(album).tracks,track => {
         playlist.addTrack(track);
       });
       this.get('player').play();
     },
-    trackClicked(track) {
-      this.get('playlist').addTrack(this.findTrack(track));
+    trackDoubleClicked(track) {
+      var playlist = this.get('playlist');
+      playlist.clear();
+      playlist.addTrack(this.findTrack(track));
+      this.get('player').play();
     }
+  },
+  findArtist(artist) {
+    return _.get(this.get('artistHash'),[artist]);
   },
   findAlbum(album) {
     return _.get(this.get('artistHash'),[
