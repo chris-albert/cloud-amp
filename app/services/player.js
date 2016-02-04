@@ -1,52 +1,7 @@
 import Ember from 'ember';
 import textFormatters from '../utils/text-formatters';
-
-var FakePlayer = Ember.Object.extend({
-  autoplay   : false,
-  src        : null,
-  currentTime: 0,
-  play() {
-    console.debug('Fake player play [' + this.get('src') + ']');
-  },
-  pause() {
-    console.debug('Fake player pause');
-  },
-  fastSeek(seekTo) {
-    console.debug('Fake player fastSeek [' + seekTo + ']');
-  }
-});
-
-var HtmlPlayer = Ember.Object.extend({
-  autoplay: false,
-  src     : null,
-  audio  : null,
-  init() {
-    var audio = new Audio();
-    this.set('audio', audio);
-    audio.autoplay = true;
-  },
-  currentTime() {
-    return this.get('audio').currentTime;
-  },
-  setSrc(url) {
-    this.get('audio').src = url;
-  },
-  play() {
-    this.get('audio').play();
-  },
-  pause() {
-    this.get('audio').pause();
-  },
-  seek(seek) {
-    this.get('audio').currentTime = seek;
-  },
-  setAutoPlay(ap) {
-    this.get('audio').autoplay = ap;
-  },
-  on(event, fn) {
-    this.get('audio').addEventListener(event, fn);
-  }
-});
+import HtmlPlayer from '../utils/html-player';
+import FakePlayer from '../utils/fake-player';
 
 export default Ember.Service.extend({
   playlist    : Ember.inject.service('playlist'),
