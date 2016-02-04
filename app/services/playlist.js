@@ -22,6 +22,23 @@ export default Ember.Service.extend({
     return new Ember.RSVP.Promise((r,e) => e(new Error('No track found')));
   },
   /**
+   * Advances the playlist to the next item in list
+   */
+  next() {
+    this.setPosition(this.get('currentPosition') + 1);
+  },
+  setPosition(i) {
+    //As long as we are trying to set to a position that exists in our playlist
+    if(i < this.get('tracks').length) {
+      this.set('currentPosition', i);
+    } else {
+      console.error('Trying to set to position that is larger that playlist');
+    }
+  },
+  changeToPosition(i) {
+    this.setPosition(i);
+  },
+  /**
    * Gets the stream url from the server
    *
    * The first time we get the stream url for a track we will cache it on the

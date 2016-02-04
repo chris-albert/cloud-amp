@@ -25,9 +25,23 @@ export default Ember.Service.extend({
   currentTime: 0,
   timeInterval: null,
   init() {
-    //this.set('audio',new Audio());
-    this.set('audio',FakePlayer.create());
-    console.log(this.get('audio'));
+    this.set('audio',new Audio());
+    //this.set('audio',FakePlayer.create());
+    this.get('audio').addEventListener('ended',() => {
+      this.audioEnded();
+    });
+  },
+  audioEnded() {
+    this.get('playlist').next();
+    this.sourceChanged();
+  },
+  sourceChanged() {
+    this.setProperties({
+      playing: false,
+      paused: false,
+      stopped: false
+    });
+    this.play();
   },
   play() {
     this.startUpdater();
