@@ -37,8 +37,8 @@ var HtmlPlayer = Ember.Object.extend({
   pause() {
     this.get('audio').pause();
   },
-  fastSeek(seekTo) {
-    //this.get('audio').fastSeek(seekTo);
+  seek(seek) {
+    this.get('audio').currentTime = seek;
   },
   setAutoPlay(ap) {
     this.get('audio').autoplay = ap;
@@ -84,7 +84,7 @@ export default Ember.Service.extend({
     } else if (this.get('stopped')) {
       //This means we came from being stopped, so set seek to 0 and play
       this.set('stopped', false);
-      this.get('audio').fastSeek(0);
+      this.get('audio').seek(0);
       this.get('audio').play();
     } else {
       //This means we are coming in fresh, so load playback url and start streaming
