@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import textFormatters from '../utils/text-formatters';
 import HtmlPlayer from '../utils/html-player';
+import AudioContextPlayer from '../utils/audio-context-player';
 import FakePlayer from '../utils/fake-player';
 
 export default Ember.Service.extend({
@@ -12,6 +13,7 @@ export default Ember.Service.extend({
   currentTime : 0,
   timeInterval: null,
   init() {
+    //this.set('audio', AudioContextPlayer.create());
     this.set('audio', HtmlPlayer.create());
     //this.set('audio',FakePlayer.create());
     this.get('audio').on('ended', () => {

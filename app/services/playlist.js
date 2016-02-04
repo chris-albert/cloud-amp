@@ -4,6 +4,7 @@ export default Ember.Service.extend({
   tracks: null,
   currentPosition: 0,
   trackChanged: false,
+  google: Ember.inject.service('google-play-resource'),
   init() {
     this.set('tracks',[]);
   },
@@ -55,7 +56,7 @@ export default Ember.Service.extend({
     if(track.stream) {
       return new Ember.RSVP.Promise(r => r(track));
     } else {
-      return Ember.$.getJSON('http://localhost:3000/streamUrl/' + track.id)
+      return this.get('google').getStreamUrl(track.id)
         .then(data => {
           track.stream = data;
           return track;

@@ -1,7 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  google: Ember.inject.service('google-play-resource'),
   model() {
-    return Ember.$.getJSON('http://localhost:3000/library');
+    var user = '';
+    var pass = '';
+    var google = this.get('google');
+    return google.getToken(user,pass)
+      .then(() => google.getLibrary());
   }
 });
