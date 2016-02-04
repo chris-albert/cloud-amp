@@ -1,8 +1,10 @@
 import Ember from 'ember';
+import textFormatters from '../utils/text-formatters';
 
 var FakePlayer = Ember.Object.extend({
   autoplay: false,
   src: null,
+  currentTime: 0,
   play() {
     console.debug('Fake player play [' + this.get('src') + ']');
   },
@@ -20,12 +22,15 @@ export default Ember.Service.extend({
   playing: false,
   paused: false,
   stopped: false,
+  currentTime: 0,
+  timeInterval: null,
   init() {
     //this.set('audio',new Audio());
     this.set('audio',FakePlayer.create());
     console.log(this.get('audio'));
   },
   play() {
+    this.startUpdater();
     if(this.get('paused')) {
       //This means we came from being paused, so just resume
       this.set('paused', false);
@@ -47,11 +52,21 @@ export default Ember.Service.extend({
     }
   },
   pause() {
+    this.stopUpdater();
     this.set('paused',true);
     this.get('audio').pause();
   },
   stop() {
+    this.stopUpdater();
     this.set('stopped',true);
     this.get('audio').pause();
+  },
+  startUpdater() {
+    this.timeInterval = setInterval(() => {
+      this.set('currentTime',this.get('audio').currentTime * 1000);
+    },500);
+  },
+  stopUpdater() {
+    clearInterval(this.timeInterval);
   }
 });

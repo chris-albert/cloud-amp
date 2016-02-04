@@ -1,11 +1,13 @@
 <div class="row">
     <div class="col-md-4 album-art-column">
-        <img class="album-art-img" src="/assets/images/Winampmain.png" />
+        <img class="album-art-img" src="{{track.album.image}}" />
     </div>
     <div class="col-md-8 details-spec">
-        <div><span class="detail-light">Title:</span> The Imperial March</div>
-        <div><span class="detail-light">Artist:</span> John Williams</div>
-        <div><span class="detail-light">Album:</span> Star wars</div>
-        <div><span class="detail-light">Track:</span> 12</div>
+        <div><span class="detail-light">Title:</span> {{track.name}}</div>
+        <div><span class="detail-light">Artist:</span> {{track.artist.name}}</div>
+        <div><span class="detail-light">Album:</span> {{track.album.name}}</div>
+        <div><span class="detail-light">Track:</span> {{track.trackNum}}</div>
+        <div><span class="detail-light">Genre:</span> {{track.genre}}</div>
+        <div><span class="detail-light">Length:</span> {{duration}}</div>
     </div>
 </div>

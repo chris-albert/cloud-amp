@@ -9,6 +9,7 @@ export default Ember.Component.extend({
   albumColumns  : config.columns.album,
   trackColumns  : config.columns.track,
   playlist      : Ember.inject.service('playlist'),
+  player        : Ember.inject.service('player'),
   formats       : textFormatters,
   actions       : {
     artistClicked(artist) {
@@ -22,6 +23,7 @@ export default Ember.Component.extend({
       _.map(this.findAlbum(album).tracks,track => {
         playlist.addTrack(track);
       });
+      this.get('player').play();
     },
     trackClicked(track) {
       this.get('playlist').addTrack(this.findTrack(track));
