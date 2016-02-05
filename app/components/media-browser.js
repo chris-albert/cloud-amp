@@ -24,8 +24,8 @@ export default Ember.Component.extend({
     artistDoubleClicked(artist) {
       var playlist = this.get('playlist');
       playlist.clear();
-      _.map(this.findArtist(artist).albums,albums => {
-        _.map(albums.tracks,track => {
+      _.map(this.findArtist(artist).albums, albums => {
+        _.map(albums.tracks, track => {
           playlist.addTrack(track);
         });
       });
@@ -34,7 +34,7 @@ export default Ember.Component.extend({
     albumDoubleClicked(album) {
       var playlist = this.get('playlist');
       playlist.clear();
-      _.map(this.findAlbum(album).tracks,track => {
+      _.map(this.findAlbum(album).tracks, track => {
         playlist.addTrack(track);
       });
       this.get('player').play();
@@ -47,17 +47,17 @@ export default Ember.Component.extend({
     }
   },
   findArtist(artist) {
-    return _.get(this.get('artistHash'),[artist]);
+    return _.get(this.get('artistHash'), [artist]);
   },
   findAlbum(album) {
-    return _.get(this.get('artistHash'),[
+    return _.get(this.get('artistHash'), [
       this.get('artistSelected'),
       'albumsHash',
       album
     ]);
   },
   findTrack(track) {
-    return _.get(this.get('artistHash'),[
+    return _.get(this.get('artistHash'), [
       this.get('artistSelected'),
       'albumsHash',
       this.get('albumSelected'),
@@ -75,11 +75,13 @@ export default Ember.Component.extend({
     return _.map(this.get('trackColumns'), 'display');
   }),
   sorted(data, key) {
-    return data.sort((a, b) => {
-      if (a[key] < b[key]) return -1;
-      if (a[key] > b[key]) return 1;
-      return 0;
-    });
+    if (data) {
+      return data.sort((a, b) => {
+        if (a[key] < b[key]) return -1;
+        if (a[key] > b[key]) return 1;
+        return 0;
+      });
+    }
   },
   buildItems(columnsKey, data, sortBy) {
     var columns = this.get(columnsKey);
@@ -107,8 +109,8 @@ export default Ember.Component.extend({
     return _.indexBy(_.map(this.get('model.artists'), artist => {
       artist.albumsHash = _.indexBy(artist.albums, 'name');
       _.map(artist.albumsHash, album => {
-        album.artist = artist;
-        album.tracksHash = _.indexBy(album.tracks,'name');
+        album.artist     = artist;
+        album.tracksHash = _.indexBy(album.tracks, 'name');
         _.map(album.tracks, track => {
           track.artist = artist;
           track.album  = album;
@@ -118,12 +120,12 @@ export default Ember.Component.extend({
     }), 'name');
   }),
   artists       : Ember.computed('model.artists', function () {
-    return this.buildItems('artistColumns', this.get('model.artists'),'name');
+    return this.buildItems('artistColumns', this.get('model.artists'), 'name');
   }),
   albums        : Ember.computed('model.artists', 'artistSelected', function () {
     var artist = this.get('artistHash')[this.get('artistSelected')];
     if (artist) {
-      return this.buildItems('albumColumns', artist.albums,'year');
+      return this.buildItems('albumColumns', artist.albums, 'year');
     }
   }),
   tracks        : Ember.computed('model.artists', 'artistSelected', 'albumSelected', function () {
@@ -133,7 +135,7 @@ export default Ember.Component.extend({
       var album = _.get(this.get('artistHash'),
         [artistSelected, 'albumsHash', albumSelected]);
       if (album) {
-        return this.buildItems('trackColumns', album.tracks,'trackNum');
+        return this.buildItems('trackColumns', album.tracks, 'trackNum');
       }
     }
   })
