@@ -32,6 +32,9 @@ export default Ember.Service.extend({
   next() {
     this.setPosition(this.get('currentPosition') + 1);
   },
+  prev() {
+    this.setPosition(this.get('currentPosition') - 1);
+  },
   setPosition(i) {
     //As long as we are trying to set to a position that exists in our playlist
     if(i < this.get('tracks').length) {

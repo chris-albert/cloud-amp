@@ -43,7 +43,6 @@ export default Ember.Service.extend({
     return this.request('/stream/url/' + id)
       .then(d => {
         d.url = this.get('baseUrl') + '/stream/data?url= ' + encodeURIComponent(d.url);
-        console.log(d.url);
         return d;
       });
   }

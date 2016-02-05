@@ -20,6 +20,16 @@ export default Ember.Component.extend({
     },
     stop() {
       this.get('player').stop();
+    },
+    prev() {
+      this.get('player').stop();
+      this.get('playlist').prev();
+      this.get('player').sourceChanged();
+    },
+    next() {
+      this.get('player').stop();
+      this.get('playlist').next();
+      this.get('player').sourceChanged();
     }
   },
   //Using jquery here to update the progress bar since ember.js
@@ -28,11 +38,23 @@ export default Ember.Component.extend({
     var pb = this.get('cachedProgressBarEl'),
         t = this.get('playlist').getCurrentTrackInfo();
     if(!pb) {
-      pb = this.$('.progress-bar');
+      pb = this.$('.progress-played');
       this.set('cachedProgressBarEl',pb);
     }
     if(t && pb) {
       pb.css('width',((this.get('player.currentTime') / t.duration) * 100) + '%');
+    }
+    return null;
+  }),
+  bufferedAhead: Ember.computed('player.bufferedTime',function() {
+    var pb = this.get('cachedProgressBarBufferedEl'),
+      t = this.get('playlist').getCurrentTrackInfo();
+    if(!pb) {
+      pb = this.$('.progress-buffered');
+      this.set('cachedProgressBarBufferedEl',pb);
+    }
+    if(t && pb) {
+      pb.css('width',(((this.get('player.bufferedTime') - this.get('player.currentTime')) / t.duration) * 100) + '%');
     }
     return null;
   }),

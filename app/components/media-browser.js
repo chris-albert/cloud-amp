@@ -29,7 +29,7 @@ export default Ember.Component.extend({
           playlist.addTrack(track);
         });
       });
-      this.get('player').play();
+      this.get('player').sourceChanged();
     },
     albumDoubleClicked(album) {
       var playlist = this.get('playlist');
@@ -37,13 +37,13 @@ export default Ember.Component.extend({
       _.map(this.findAlbum(album).tracks, track => {
         playlist.addTrack(track);
       });
-      this.get('player').play();
+      this.get('player').sourceChanged();
     },
     trackDoubleClicked(track) {
       var playlist = this.get('playlist');
       playlist.clear();
       playlist.addTrack(this.findTrack(track));
-      this.get('player').play();
+      this.get('player').sourceChanged();
     }
   },
   findArtist(artist) {

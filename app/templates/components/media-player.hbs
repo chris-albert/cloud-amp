@@ -26,11 +26,13 @@
     </div>
 </div>
 <div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="{{percentComplete}}" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
+    <div class="progress-bar progress-played" role="progressbar" aria-valuenow="{{percentComplete}}" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
+    </div>
+    <div class="progress-bar progress-buffered" role="progressbar" aria-valuenow="{{bufferedAhead}}" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
     </div>
 </div>
 <div class="controls">
-    <button type="button" class="btn btn-default btn-xs">
+    <button type="button" class="btn btn-default btn-xs" {{action "prev"}}>
         <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
     </button>
     <button type="button" class="btn btn-default btn-xs" {{action "play"}}>
@@ -42,7 +44,8 @@
     <button type="button" class="btn btn-default btn-xs" {{action "stop"}}>
         <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
     </button>
-    <button type="button" class="btn btn-default btn-xs">
+    <button type="button" class="btn btn-default btn-xs" {{action "next"}}>
         <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
     </button>
 </div>
+<!--<canvas id="canvas"></canvas>-->

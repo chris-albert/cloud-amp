@@ -11,10 +11,11 @@ export default Ember.Service.extend({
   paused      : false,
   stopped     : false,
   currentTime : 0,
+  bufferedTime: 0,
   timeInterval: null,
   init() {
-    //this.set('audio', AudioContextPlayer.create());
-    this.set('audio', HtmlPlayer.create());
+    this.set('audio', AudioContextPlayer.create());
+    //this.set('audio', HtmlPlayer.create());
     //this.set('audio',FakePlayer.create());
     this.get('audio').on('ended', () => {
       this.audioEnded();
@@ -62,11 +63,12 @@ export default Ember.Service.extend({
   stop() {
     this.stopUpdater();
     this.set('stopped', true);
-    this.get('audio').pause();
+    this.get('audio').stop();
   },
   startUpdater() {
     this.timeInterval = setInterval(() => {
       this.set('currentTime', this.get('audio').currentTime() * 1000);
+      this.set('bufferedTime',this.get('audio').bufferedTime() * 1000);
     }, 500);
   },
   stopUpdater() {

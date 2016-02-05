@@ -29,6 +29,7 @@ body {
 .header-components {
   height: 13%;
     margin-bottom: 10px;
+    height: 120px;
 }
 
 .media-browser {
@@ -161,8 +162,11 @@ body {
     background-color: black;
 }
 
-.media-player .progress-bar {
+.media-player .progress-played {
     background-color: #8D989D;
+}
+.media-player .progress-buffered {
+    background-color: #36393B;
 }
 
 /*
@@ -224,4 +228,13 @@ body {
 .login {
   color: white;
   width: 500px;
+}
+
+#canvas {
+    background-color: white;
+    position: absolute;
+    top:0;
+    right: 0;
+    height: 325px;
+    width: 1000px;
 }
