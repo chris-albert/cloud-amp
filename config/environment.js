@@ -102,7 +102,8 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
-    columns: columns
+    columns: columns,
+    apiUrl: 'http://localhost:3000'
   };
 
   if (environment === 'development') {
@@ -126,7 +127,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.apiUrl = 'http://api.cloudamp.io';
   }
 
   return ENV;

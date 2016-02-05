@@ -216,3 +216,12 @@ body {
     margin-left: 0px;
     margin-right: -10px;
 }
+
+/*
+  Google Login
+*/
+
+.login {
+  color: white;
+  width: 500px;
+}

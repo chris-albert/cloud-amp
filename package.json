@@ -41,6 +41,8 @@
     "ember-lodash": "0.0.6"
   },
   "dependencies": {
-    "moment": "^2.11.1"
+    "moment": "^2.11.1",
+    "query-string": "^3.0.0",
+    "querystring": "^0.2.0"
   }
 }

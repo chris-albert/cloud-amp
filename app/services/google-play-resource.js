@@ -1,33 +1,50 @@
 import Ember from 'ember';
+import config from 'cloud-amp/config/environment';
 
 export default Ember.Service.extend({
-  token  : null,
-  baseUrl: 'http://localhost:3000',
+  baseUrl: config.apiUrl,
   storage: Ember.inject.service('browser-cache'),
   init() {
   },
-  getToken(user, pass) {
-    var token = this.get('storage').getCache('google-token');
+  logout() {
+    this.get('storage').deleteKey('google-token');
+  },
+  getToken() {
+    return this.get('storage').getCache('google-token');
+  },
+  hasToken() {
+    return !!this.getToken();
+  },
+  login(user, pass) {
+    var token = this.getToken();
     if (token) {
       return new Ember.RSVP.Promise(r => {
-        this.set('token',token);
-        r();
+        r(token);
       });
     } else {
-      return Ember.$.getJSON('http://localhost:3000/token', {
+      return Ember.$.getJSON(this.get('baseUrl') + '/token', {
         user: user, pass: pass
       }).then(t => {
-        this.get('storage').setCache('google-token',t.token);
-        this.set('token', t.token);
+        if(t.token) {
+          this.get('storage').setCache('google-token', t.token);
+          return t.token;
+        }
       });
     }
   },
+  request(path) {
+    return Ember.$.getJSON(this.get('baseUrl') + path,
+      {token: this.getToken()});
+  },
   getLibrary() {
-    return Ember.$.getJSON(this.get('baseUrl') + '/library',
-      {token: this.get('token')});
+    return this.request('/library');
   },
   getStreamUrl(id) {
-    return Ember.$.getJSON(this.get('baseUrl') + '/stream/url/' + id,
-      {token: this.get('token')});
+    return this.request('/stream/url/' + id)
+      .then(d => {
+        d.url = this.get('baseUrl') + '/stream/data?url= ' + encodeURIComponent(d.url);
+        console.log(d.url);
+        return d;
+      });
   }
 });

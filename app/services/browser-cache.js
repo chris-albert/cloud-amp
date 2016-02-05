@@ -6,5 +6,8 @@ export default Ember.Service.extend({
   },
   getCache(key) {
     return localStorage.getItem(key);
+  },
+  deleteKey(key) {
+    localStorage.removeItem(key);
   }
 });
