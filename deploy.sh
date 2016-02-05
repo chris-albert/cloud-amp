@@ -2,7 +2,7 @@
 # This script will deploy this app to the server
 
 echo "Build the ember app"
-ember build
+ember build --environment="production"
 
 echo
 echo "Compress that shit"
