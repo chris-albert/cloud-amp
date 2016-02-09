@@ -38,6 +38,12 @@ export default Ember.Object.extend(Ember.Evented,{
     }
     return 0;
   },
+  sampleRate() {
+    return this.get('context').sampleRate;
+  },
+  channels() {
+    return this.get('source').channels;
+  },
   setSrc(url) {
     this.loadUrl(url);
   },
