@@ -48,6 +48,9 @@ export default Ember.Object.extend(Ember.Evented,{
     this.get('audio').muted = !was;
     return !was;
   },
+  changeVolume(volume) {
+    this.get('audio').volume = volume / 100;
+  },
   sampleRate() {
     return this.get('context').sampleRate;
   },

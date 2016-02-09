@@ -7,7 +7,7 @@ function trackChanged(f) {
   return Ember.computed('playlist.tracks','playlist.currentPosition',f);
 }
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(Ember.Evented,{
   classNames: ['media-player'],
   player: Ember.inject.service('player'),
   playlist: Ember.inject.service('playlist'),
@@ -45,7 +45,23 @@ export default Ember.Component.extend({
     this.get('player').on('playing',() => {
       this.setupEq();
     });
+    this.on('volumeChanged',this.volumeChange);
     this._super();
+  },
+  didInsertElement() {
+    var self = this;
+    this.$('.volume-slider')
+      .slider({
+        range: 'min',
+        value: 100,
+        slide: function(e,ui) {
+          //self.volumeChange(ui.value);
+          self.trigger('volumeChanged',ui.value);
+        }
+      });
+  },
+  volumeChange(value) {
+    this.get('player').changeVolume(value);
   },
   //Using jquery here to update the progress bar since ember.js
   //gets really mad at you if you change inline styles

@@ -26,10 +26,15 @@
     <div class="eq col-md-6">
         <canvas class="eq-canvas" width="128" height="30"></canvas>
     </div>
-    <div class="volume col-md-6">
-        <button type="button" class="btn btn-default btn-xs" {{action "mute"}}>
-            <span class="glyphicon glyphicon-volume-{{muteIcon}}" aria-hidden="true"></span>
-        </button>
+    <div class="volume col-md-6 row">
+        <div class="col-md-3">
+            <button type="button" class="btn btn-default btn-xs" {{action "mute"}}>
+                <span class="glyphicon glyphicon-volume-{{muteIcon}}" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="col-md-9">
+            <div class="volume-slider"></div>
+        </div>
     </div>
 </div>
 <div class="progress">

@@ -51,6 +51,9 @@ export default Ember.Service.extend(Ember.Evented,{
     }
     this.set('status','playing');
   },
+  changeVolume(volume) {
+    this.get('audio').changeVolume(volume);
+  },
   pause() {
     this.stopUpdater();
     this.set('status', 'paused');
