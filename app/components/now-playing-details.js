@@ -10,7 +10,6 @@ export default Ember.Component.extend({
   }),
   duration: Ember.computed('playlist.currentPosition','playlist.tracks',function() {
     var t = this.get('playlist').getCurrentTrackInfo();
-    console.log(t);
     if(t && t.duration) {
       return textFormatters.duration(t.duration);
     } else {

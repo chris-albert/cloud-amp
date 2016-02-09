@@ -4,7 +4,7 @@ import HtmlPlayer from '../utils/html-player';
 import AudioContextPlayer from '../utils/audio-context-player';
 import FakePlayer from '../utils/fake-player';
 
-export default Ember.Service.extend({
+export default Ember.Service.extend(Ember.Evented,{
   playlist    : Ember.inject.service('playlist'),
   audio       : null,
   status      : null,
@@ -44,6 +44,9 @@ export default Ember.Service.extend({
           var audio = this.get('audio');
           audio.setAutoPlay(true);
           audio.setSrc(t.stream.url);
+          audio.on('canplay',() => {
+            this.trigger('playing');
+          });
         });
     }
     this.set('status','playing');
@@ -53,12 +56,14 @@ export default Ember.Service.extend({
     this.set('status', 'paused');
     this.set('paused', true);
     this.get('audio').pause();
+    this.trigger('paused');
   },
   stop() {
     this.stopUpdater();
     this.set('status', 'stopped');
     this.set('stopped', true);
     this.get('audio').stop();
+    this.trigger('stopped');
   },
   startUpdater() {
     this.timeInterval = setInterval(() => {

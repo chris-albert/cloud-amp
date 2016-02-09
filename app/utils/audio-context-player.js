@@ -15,10 +15,12 @@ export default Ember.Object.extend(Ember.Evented,{
     var audio = this.createAudio(url),
         context = new AudioContext();
     this.set('audio',audio);
+    this.set('context',context);
     audio.addEventListener('canplay',() => {
       var source = context.createMediaElementSource(audio);
       source.connect(context.destination);
       this.set('source',source);
+      this.trigger('canplay');
     });
   },
   createAudio(url) {
@@ -61,7 +63,10 @@ export default Ember.Object.extend(Ember.Evented,{
     this.get('audio').currentTime = seek;
   },
   bufferedTime() {
-    return this.get('audio').buffered.end(0);
+    if(this.get('audio')) {
+      return this.get('audio').buffered.end(0);
+    }
+    return 0;
   },
   setAutoPlay(ap) {
   }

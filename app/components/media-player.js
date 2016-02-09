@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import _ from 'lodash';
 import textFormatters from '../utils/text-formatters';
+import processor from '../utils/audio-processing';
 
 function trackChanged(f) {
   return Ember.computed('playlist.tracks','playlist.currentPosition',f);
@@ -32,6 +33,12 @@ export default Ember.Component.extend({
       this.get('player').sourceChanged();
     }
   },
+  init: function() {
+    this.get('player').on('playing',() => {
+      this.setupEq();
+    });
+    this._super();
+  },
   //Using jquery here to update the progress bar since ember.js
   //gets really mad at you if you change inline styles
   percentComplete: Ember.computed('player.currentTime',function() {
@@ -49,6 +56,14 @@ export default Ember.Component.extend({
   bitRate: "320",
   sampleRate: "44",
   channels: "STEREO",
+  setupEq() {
+    var ctx = _.head(this.$('.eq-canvas'));
+    if(this.get('player.audio.context') && this.get('player.audio.source') && ctx) {
+      var p = processor.spectrumAnalyser(this.get('player.audio.context'), this.get('player.audio.source'), ctx);
+      this.set('processor',p);
+    }
+    return null;
+  },
   statusIcon: Ember.computed('player.status',function() {
     switch(this.get('player.status')) {
       case 'playing':

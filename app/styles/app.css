@@ -181,6 +181,13 @@ body {
     padding-right: 20px !important;
 }
 
+.eq-canvas {
+    background-color: black;
+    height: 30px;
+    width: 100%;
+    margin-top: -5px;
+}
+
 /*
   Now Playing styles
 */
