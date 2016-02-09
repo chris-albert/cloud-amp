@@ -13,9 +13,13 @@ export default Ember.Object.extend(Ember.Evented,{
       this.set('audio',null);
     }
     var audio = this.createAudio(url),
-        context = new AudioContext();
+        //context = new AudioContext();
+        context = this.get('context');
+    if(!context) {
+      context = new AudioContext();
+      this.set('context',context);
+    }
     this.set('audio',audio);
-    this.set('context',context);
     audio.addEventListener('canplay',() => {
       var source = context.createMediaElementSource(audio);
       source.connect(context.destination);
@@ -63,8 +67,9 @@ export default Ember.Object.extend(Ember.Evented,{
     this.get('audio').currentTime = seek;
   },
   bufferedTime() {
-    if(this.get('audio')) {
-      return this.get('audio').buffered.end(0);
+    var audio = this.get('audio');
+    if(audio && audio.buffered && audio.buffered.length) {
+      return audio.buffered.end(0);
     }
     return 0;
   },

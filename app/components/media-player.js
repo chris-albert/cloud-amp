@@ -59,6 +59,9 @@ export default Ember.Component.extend({
   setupEq() {
     var ctx = _.head(this.$('.eq-canvas'));
     if(this.get('player.audio.context') && this.get('player.audio.source') && ctx) {
+      if(this.get('processor')) {
+        this.get('processor').onaudioprocess = function() {};
+      }
       var p = processor.spectrumAnalyser(this.get('player.audio.context'), this.get('player.audio.source'), ctx);
       this.set('processor',p);
     }
