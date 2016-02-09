@@ -7,15 +7,17 @@
             {{trackTitle}}
         </div>
         <div class="specs row">
-            <div class="col-md-6"></div>
-            <div class="col-md-2">
-                192KBPS
+            <div class="col-md-6 spec-status">
+                <span class="glyphicon glyphicon-{{statusIcon}}" aria-hidden="true"></span>
             </div>
             <div class="col-md-2">
-                44KHZ
+                {{bitRate}} <span class="dark">KBPS</span>
             </div>
             <div class="col-md-2">
-                STEREO
+                {{sampleRate}} <span class="dark">KHZ</span>
+            </div>
+            <div class="col-md-2">
+                <span class="dark">{{channels}}</span>
             </div>
         </div>
     </div>

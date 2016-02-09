@@ -46,6 +46,19 @@ export default Ember.Component.extend({
     }
     return null;
   }),
+  bitRate: "320",
+  sampleRate: "44",
+  channels: "STEREO",
+  statusIcon: Ember.computed('player.status',function() {
+    switch(this.get('player.status')) {
+      case 'playing':
+        return 'play';
+      case 'stopped':
+        return 'stop';
+      case 'paused':
+        return 'pause';
+    }
+  }),
   bufferedAhead: Ember.computed('player.bufferedTime',function() {
     var pb = this.get('cachedProgressBarBufferedEl'),
       t = this.get('playlist').getCurrentTrackInfo();

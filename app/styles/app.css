@@ -137,8 +137,11 @@ body {
 
 .media-player .specs {
     background-color: #090A0A;
-    font-size: 10px;
+    font-size: 8px;
     margin-right: 5px;
+}
+.media-player .specs>div {
+    padding: 0;
 }
 
 .media-player .eq-volume {
@@ -167,6 +170,15 @@ body {
 }
 .media-player .progress-buffered {
     background-color: #36393B;
+}
+
+.media-player .specs .dark {
+    color: #5B6B72;
+}
+
+.spec-status {
+    text-align: right;
+    padding-right: 20px !important;
 }
 
 /*

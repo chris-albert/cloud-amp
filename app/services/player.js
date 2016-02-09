@@ -7,9 +7,7 @@ import FakePlayer from '../utils/fake-player';
 export default Ember.Service.extend({
   playlist    : Ember.inject.service('playlist'),
   audio       : null,
-  playing     : false,
-  paused      : false,
-  stopped     : false,
+  status      : null,
   currentTime : 0,
   bufferedTime: 0,
   timeInterval: null,
@@ -26,22 +24,17 @@ export default Ember.Service.extend({
     this.sourceChanged();
   },
   sourceChanged() {
-    this.setProperties({
-      playing: false,
-      paused : false,
-      stopped: false
-    });
+    this.set('status',null);
     this.play();
   },
   play() {
     this.startUpdater();
-    if (this.get('paused')) {
+    var status = this.get('status');
+    if (status === 'paused') {
       //This means we came from being paused, so just resume
-      this.set('paused', false);
       this.get('audio').play();
-    } else if (this.get('stopped')) {
+    } else if (status === 'stopped') {
       //This means we came from being stopped, so set seek to 0 and play
-      this.set('stopped', false);
       this.get('audio').seek(0);
       this.get('audio').play();
     } else {
@@ -51,17 +44,19 @@ export default Ember.Service.extend({
           var audio = this.get('audio');
           audio.setAutoPlay(true);
           audio.setSrc(t.stream.url);
-          this.set('playing', true);
         });
     }
+    this.set('status','playing');
   },
   pause() {
     this.stopUpdater();
+    this.set('status', 'paused');
     this.set('paused', true);
     this.get('audio').pause();
   },
   stop() {
     this.stopUpdater();
+    this.set('status', 'stopped');
     this.set('stopped', true);
     this.get('audio').stop();
   },
