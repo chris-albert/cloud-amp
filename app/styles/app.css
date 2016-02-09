@@ -188,6 +188,10 @@ body {
     margin-top: -5px;
 }
 
+.eq-volume .volume {
+  padding-top: 5px;
+}
+
 /*
   Now Playing styles
 */

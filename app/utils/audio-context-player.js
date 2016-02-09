@@ -13,7 +13,6 @@ export default Ember.Object.extend(Ember.Evented,{
       this.set('audio',null);
     }
     var audio = this.createAudio(url),
-        //context = new AudioContext();
         context = this.get('context');
     if(!context) {
       context = new AudioContext();
@@ -43,6 +42,11 @@ export default Ember.Object.extend(Ember.Evented,{
       return this.get('audio').currentTime;
     }
     return 0;
+  },
+  toggleMute() {
+    var was = this.get('audio').muted;
+    this.get('audio').muted = !was;
+    return !was;
   },
   sampleRate() {
     return this.get('context').sampleRate;

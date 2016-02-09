@@ -53,7 +53,6 @@ export default {
     var self = this;
     ctx.fillStyle = this.getGradiant(ctx,height);
     processor.onaudioprocess = function() {
-      console.log('zxcv')
       // get the average for the first channel
       analyser.getByteFrequencyData(array);
       //2179

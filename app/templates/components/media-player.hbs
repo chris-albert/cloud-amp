@@ -1,20 +1,20 @@
 <div class="now-playing row">
     <div class="time col-md-3">
-        {{time}}
+      {{time}}
     </div>
     <div class="col-md-9">
         <div class="whats-playing text-right">
-            {{trackTitle}}
+          {{trackTitle}}
         </div>
         <div class="specs row">
             <div class="col-md-6 spec-status">
                 <span class="glyphicon glyphicon-{{statusIcon}}" aria-hidden="true"></span>
             </div>
             <div class="col-md-2">
-                {{bitRate}} <span class="dark">KBPS</span>
+              {{bitRate}} <span class="dark">KBPS</span>
             </div>
             <div class="col-md-2">
-                {{sampleRate}} <span class="dark">KHZ</span>
+              {{sampleRate}} <span class="dark">KHZ</span>
             </div>
             <div class="col-md-2">
                 <span class="dark">{{channels}}</span>
@@ -26,11 +26,18 @@
     <div class="eq col-md-6">
         <canvas class="eq-canvas" width="128" height="30"></canvas>
     </div>
+    <div class="volume col-md-6">
+        <button type="button" class="btn btn-default btn-xs" {{action "mute"}}>
+            <span class="glyphicon glyphicon-volume-{{muteIcon}}" aria-hidden="true"></span>
+        </button>
+    </div>
 </div>
 <div class="progress">
-    <div class="progress-bar progress-played" role="progressbar" aria-valuenow="{{percentComplete}}" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
+    <div class="progress-bar progress-played" role="progressbar" aria-valuenow="{{percentComplete}}"
+         aria-valuemin="0" aria-valuemax="100" style="width: 0;">
     </div>
-    <div class="progress-bar progress-buffered" role="progressbar" aria-valuenow="{{bufferedAhead}}" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
+    <div class="progress-bar progress-buffered" role="progressbar" aria-valuenow="{{bufferedAhead}}"
+         aria-valuemin="0" aria-valuemax="100" style="width: 0;">
     </div>
 </div>
 <div class="controls">

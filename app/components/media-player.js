@@ -12,6 +12,7 @@ export default Ember.Component.extend({
   player: Ember.inject.service('player'),
   playlist: Ember.inject.service('playlist'),
   cachedProgressBarEl: null,
+  muteIcon: 'off',
   actions: {
     play() {
       this.get('player').play();
@@ -31,6 +32,13 @@ export default Ember.Component.extend({
       this.get('player').stop();
       this.get('playlist').next();
       this.get('player').sourceChanged();
+    },
+    mute() {
+      if(this.get('player.audio').toggleMute()) {
+        this.set('muteIcon','up');
+      }else {
+        this.set('muteIcon','off');
+      }
     }
   },
   init: function() {
