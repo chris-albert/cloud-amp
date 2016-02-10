@@ -88,7 +88,7 @@ export default Ember.Component.extend({
     return _.map(this.sorted(data, sortBy), artist => {
       var item = _.map(columns, column => {
         var value = _.get(artist, column.name);
-        if (value) {
+        if (!_.isUndefined(value)) {
           var n = value;
           if (column.format && _.isFunction(this.get('formats.' + column.format))) {
             n = this.get('formats.' + column.format)(n);
