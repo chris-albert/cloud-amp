@@ -34,8 +34,12 @@ export default Ember.Object.extend(Ember.Evented,{
     audio.addEventListener('ended',() => {
       this.trigger('ended');
     });
-    audio.addEventListener('error',() => {
-      this.trigger('error');
+    audio.addEventListener('error',e => {
+      if(e.target.error.code === e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED) {
+        this.trigger('mediaError');
+      } else {
+        this.trigger('error',e);
+      }
     });
     return audio;
   },
@@ -44,6 +48,12 @@ export default Ember.Object.extend(Ember.Evented,{
       return this.get('audio').currentTime;
     }
     return 0;
+  },
+  totalTime() {
+    if(this.get('audio')) {
+      return this.get('audio').duration;
+    }
+    return null;
   },
   toggleMute() {
     var was = this.get('audio').muted;

@@ -103,7 +103,14 @@ module.exports = function(environment) {
       // when it is created
     },
     columns: columns,
-    apiUrl: 'http://localhost:3000'
+    apiUrl: 'http://localhost:3000',
+    incrementPlayCount: false,
+    contentSecurityPolicy:  {
+      'connect-src': "'self' http://localhost:3000",
+      'media-src': "'self' http://localhost:3000",
+      'img-src': "'self' *",
+      'style-src': "'self' 'unsafe-inline'"
+    }
   };
 
   if (environment === 'development') {
@@ -128,6 +135,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.apiUrl = 'http://api.cloudamp.io';
+    ENV.incrementPlayCount = true;
   }
 
   return ENV;

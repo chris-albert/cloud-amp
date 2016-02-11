@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from 'cloud-amp/config/environment';
 
 export default Ember.Service.extend({
   tracks: null,
@@ -47,11 +48,13 @@ export default Ember.Service.extend({
     this.setPosition(i);
   },
   incrementPlayCount() {
-    var currTrack = this.getCurrentTrackInfo();
-    this.get('google').playCount(currTrack.id)
-      .then(isSuccess => {
-        console.log('yeay: ' + isSuccess);
-      });
+    if(config.incrementPlayCount) {
+      var currTrack = this.getCurrentTrackInfo();
+      this.get('google').playCount(currTrack.id)
+        .then(isSuccess => {
+          console.log('yeay: ' + isSuccess);
+        });
+    }
   },
   /**
    * Gets the stream url from the server
@@ -73,6 +76,9 @@ export default Ember.Service.extend({
           return track;
         });
     }
+  },
+  unsetCurrentStreamUrl() {
+    this.get('tracks')[this.get('currentPosition')].stream = null;
   },
   cacheNextStreamUrl() {
     if(this.get('currentPosition') + 1 < this.get('tracks').length) {

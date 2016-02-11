@@ -11,15 +11,22 @@ export default Ember.Service.extend(Ember.Evented,{
   currentTime : 0,
   bufferedTime: 0,
   timeInterval: null,
+  almostDoneFired: false,
   init() {
     this.set('audio', AudioContextPlayer.create());
     this.get('audio').on('ended', () => {
       this.audioEnded();
     });
-    this.get('audio').on('error',e => {
-      console.log(e);
+    //In case the stream url gets a 403, try to get it again
+    //TODO: Make sure this doesn't happen forever in an infinite loop
+    this.get('audio').on('mediaError',e => {
+      this.get('playlist').unsetCurrentStreamUrl();
+      this.sourceChanged();
     });
   },
+  almostDone: Ember.computed.func('currentTime',currentTime => {
+
+  }),
   audioEnded() {
     this.get('playlist').incrementPlayCount();
     this.get('playlist').next();
@@ -40,13 +47,13 @@ export default Ember.Service.extend(Ember.Evented,{
       this.get('audio').seek(0);
       this.get('audio').play();
     } else {
-      //This means we are coming in fresh, so load playback url and start streaming
+      //This means we are coming in fresh or next in playlist, so start streaming
       this.get('playlist').getCurrentTrack()
         .then(t => {
           var audio = this.get('audio');
           audio.setAutoPlay(true);
           audio.setSrc(t.stream.url);
-          this.get('playlist').cacheNextStreamUrl();
+          this.set('almostDoneFired',false);
           audio.on('canplay',() => {
             this.trigger('playing');
           });
@@ -74,8 +81,14 @@ export default Ember.Service.extend(Ember.Evented,{
   },
   startUpdater() {
     this.timeInterval = setInterval(() => {
-      this.set('currentTime', this.get('audio').currentTime() * 1000);
-      this.set('bufferedTime',this.get('audio').bufferedTime() * 1000);
+      var audio = this.get('audio'),
+          ct = this.get('audio').currentTime();
+      this.set('currentTime', ct * 1000);
+      this.set('bufferedTime',audio.bufferedTime() * 1000);
+      if(audio.totalTime() && audio.totalTime() - 20 < ct && !this.get('almostDoneFired')) {
+        this.get('playlist').cacheNextStreamUrl();
+        this.set('almostDoneFired',true);
+      }
     }, 500);
   },
   stopUpdater() {

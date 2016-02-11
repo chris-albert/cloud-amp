@@ -24,7 +24,7 @@ module.exports = function(defaults) {
   app.import('bower_components/jquery-ui/ui/widget.js');
   app.import('bower_components/jquery-ui/ui/mouse.js');
   app.import('bower_components/jquery-ui/ui/slider.js');
-  app.import('bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css');
+  app.import('bower_components/jquery-ui/themes/base/jquery-ui.min.css');
 
   return app.toTree();
 };
