@@ -12,7 +12,7 @@ export default Ember.Component.extend(Ember.Evented,{
   player: Ember.inject.service('player'),
   playlist: Ember.inject.service('playlist'),
   cachedProgressBarEl: null,
-  muteIcon: 'off',
+  muted: false,
   actions: {
     play() {
       this.get('player').play();
@@ -34,11 +34,7 @@ export default Ember.Component.extend(Ember.Evented,{
       this.get('player').sourceChanged();
     },
     mute() {
-      if(this.get('player.audio').toggleMute()) {
-        this.set('muteIcon','up');
-      }else {
-        this.set('muteIcon','off');
-      }
+      this.set('muted', this.get('player').toggleMute());
     }
   },
   init: function() {
@@ -55,7 +51,6 @@ export default Ember.Component.extend(Ember.Evented,{
         range: 'min',
         value: 100,
         slide: function(e,ui) {
-          //self.volumeChange(ui.value);
           self.trigger('volumeChanged',ui.value);
         }
       });
@@ -63,6 +58,7 @@ export default Ember.Component.extend(Ember.Evented,{
   volumeChange(value) {
     this.get('player').changeVolume(value);
   },
+  muteIcon: Ember.computed.if('muted','up','off'),
   //Using jquery here to update the progress bar since ember.js
   //gets really mad at you if you change inline styles
   percentComplete: Ember.computed('player.currentTime',function() {
@@ -74,6 +70,18 @@ export default Ember.Component.extend(Ember.Evented,{
     }
     if(t && pb) {
       pb.css('width',((this.get('player.currentTime') / t.duration) * 100) + '%');
+    }
+    return null;
+  }),
+  bufferedAhead: Ember.computed('player.bufferedTime',function() {
+    var pb = this.get('cachedProgressBarBufferedEl'),
+      t = this.get('playlist').getCurrentTrackInfo();
+    if(!pb) {
+      pb = this.$('.progress-buffered');
+      this.set('cachedProgressBarBufferedEl',pb);
+    }
+    if(t && pb) {
+      pb.css('width',(((this.get('player.bufferedTime') - this.get('player.currentTime')) / t.duration) * 100) + '%');
     }
     return null;
   }),
@@ -100,18 +108,6 @@ export default Ember.Component.extend(Ember.Evented,{
       case 'paused':
         return 'pause';
     }
-  }),
-  bufferedAhead: Ember.computed('player.bufferedTime',function() {
-    var pb = this.get('cachedProgressBarBufferedEl'),
-      t = this.get('playlist').getCurrentTrackInfo();
-    if(!pb) {
-      pb = this.$('.progress-buffered');
-      this.set('cachedProgressBarBufferedEl',pb);
-    }
-    if(t && pb) {
-      pb.css('width',(((this.get('player.bufferedTime') - this.get('player.currentTime')) / t.duration) * 100) + '%');
-    }
-    return null;
   }),
   time: Ember.computed('player.currentTime',function() {
      return textFormatters.duration(this.get('player.currentTime'));

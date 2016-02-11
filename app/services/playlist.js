@@ -61,9 +61,15 @@ export default Ember.Service.extend({
     } else {
       return this.get('google').getStreamUrl(track.id)
         .then(data => {
+          this.notifyPropertyChange('tracks');
           track.stream = data;
           return track;
         });
+    }
+  },
+  cacheNextStreamUrl() {
+    if(this.get('currentPosition') + 1 < this.get('tracks').length) {
+      this.getStreamUrl(this.get('tracks')[this.get('currentPosition') + 1]);
     }
   }
 });

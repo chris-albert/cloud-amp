@@ -36,7 +36,6 @@ export default Ember.Object.extend(Ember.Evented,{
     });
     return audio;
   },
-  //Things to implement to work with player service
   currentTime() {
     if(this.get('audio')) {
       return this.get('audio').currentTime;

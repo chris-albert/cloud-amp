@@ -13,8 +13,6 @@ export default Ember.Service.extend(Ember.Evented,{
   timeInterval: null,
   init() {
     this.set('audio', AudioContextPlayer.create());
-    //this.set('audio', HtmlPlayer.create());
-    //this.set('audio',FakePlayer.create());
     this.get('audio').on('ended', () => {
       this.audioEnded();
     });
@@ -44,6 +42,7 @@ export default Ember.Service.extend(Ember.Evented,{
           var audio = this.get('audio');
           audio.setAutoPlay(true);
           audio.setSrc(t.stream.url);
+          this.get('playlist').cacheNextStreamUrl();
           audio.on('canplay',() => {
             this.trigger('playing');
           });
@@ -54,17 +53,18 @@ export default Ember.Service.extend(Ember.Evented,{
   changeVolume(volume) {
     this.get('audio').changeVolume(volume);
   },
+  toggleMute() {
+    return this.get('audio').toggleMute();
+  },
   pause() {
     this.stopUpdater();
     this.set('status', 'paused');
-    this.set('paused', true);
     this.get('audio').pause();
     this.trigger('paused');
   },
   stop() {
     this.stopUpdater();
     this.set('status', 'stopped');
-    this.set('stopped', true);
     this.get('audio').stop();
     this.trigger('stopped');
   },

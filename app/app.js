@@ -13,6 +13,28 @@ App = Ember.Application.extend({
   Resolver
 });
 
+Ember.computed.if = function(key,t,f) {
+  return Ember.computed(key,function() {
+    if(this.get(key)) {
+      return t;
+    } else {
+      return f;
+    }
+  });
+};
+
+Ember.computed.switch = function(key,obj) {
+  return Ember.computed(key,function() {
+    return obj[this.get(key)];
+  });
+};
+
+Ember.computed.func = function(key,func) {
+  return Ember.computed(key,function() {
+    return func(this.get(key));
+  });
+};
+
 loadInitializers(App, config.modulePrefix);
 
 export default App;

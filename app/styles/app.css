@@ -99,6 +99,10 @@ body {
     color: #C8C8C8;
 }
 
+.browser-table-item.cached {
+    padding-right: 2px;
+}
+
 /*
  Player styles
 */
