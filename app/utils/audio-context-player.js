@@ -34,6 +34,9 @@ export default Ember.Object.extend(Ember.Evented,{
     audio.addEventListener('ended',() => {
       this.trigger('ended');
     });
+    audio.addEventListener('error',() => {
+      this.trigger('error');
+    });
     return audio;
   },
   currentTime() {

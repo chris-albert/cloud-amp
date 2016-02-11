@@ -45,5 +45,11 @@ export default Ember.Service.extend({
         d.url = this.get('baseUrl') + '/stream/data?url= ' + encodeURIComponent(d.url);
         return d;
       });
+  },
+  playCount(id) {
+    return this.request('/count/' + id)
+      .then(d => {
+        return d.status === 'ok';
+      });
   }
 });

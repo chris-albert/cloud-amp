@@ -16,8 +16,12 @@ export default Ember.Service.extend(Ember.Evented,{
     this.get('audio').on('ended', () => {
       this.audioEnded();
     });
+    this.get('audio').on('error',e => {
+      console.log(e);
+    });
   },
   audioEnded() {
+    this.get('playlist').incrementPlayCount();
     this.get('playlist').next();
     this.sourceChanged();
   },

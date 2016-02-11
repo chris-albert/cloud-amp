@@ -46,6 +46,13 @@ export default Ember.Service.extend({
   changeToPosition(i) {
     this.setPosition(i);
   },
+  incrementPlayCount() {
+    var currTrack = this.getCurrentTrackInfo();
+    this.get('google').playCount(currTrack.id)
+      .then(isSuccess => {
+        console.log('yeay: ' + isSuccess);
+      });
+  },
   /**
    * Gets the stream url from the server
    *
