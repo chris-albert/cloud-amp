@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   //The headers object for our table
   headers: null,
   //What key you would like to sort the rows by
+  //If no sort by set, then no sort will happen
   sortBy: null,
   actions: {
     itemClicked(item) {
@@ -19,15 +20,23 @@ export default Ember.Component.extend({
   sorted(data, key) {
     if (data) {
       return data.sort((a, b) => {
-        if (a[key] < b[key]) return -1;
-        if (a[key] > b[key]) return 1;
+        if (a[key] < b[key]) {
+          return -1;
+        }
+        if (a[key] > b[key]) {
+          return 1;
+        }
         return 0;
       });
     }
   },
-  sortedItems: Ember.computed.func('items',function(items) {
+  sortedItems: Ember.computed('items.@each.class',function() {
     //Here we reset the items so the sort is preserved
-    this.set('items',this.sorted(items,this.get('sortBy')));
+    var sortBy = this.get('sortBy'),
+      items = this.get('items');
+    if(sortBy) {
+      this.set('items',this.sorted(items,this.get('sortBy')));
+    }
     return items;
   })
 });

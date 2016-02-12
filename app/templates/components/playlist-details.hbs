@@ -1,3 +1,7 @@
 <div class="row">
-    {{browser-table items=items doubleClick="selected"}}
+  {{browser-table-keys
+  headers=columns
+  showHeaders=false
+  items=playlist.tracks
+  doubleClick="selected"}}
 </div>

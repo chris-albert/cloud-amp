@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import config from 'cloud-amp/config/environment';
+import _ from 'lodash';
 
 export default Ember.Service.extend({
   tracks: null,
@@ -23,6 +24,11 @@ export default Ember.Service.extend({
     }
     return new Ember.RSVP.Promise((r,e) => e(new Error('No track found')));
   },
+  setCurrentPlaying() {
+    var track = this.getCurrentTrackInfo();
+    _.map(this.get('tracks'),track => Ember.set(track,'class',null));
+    Ember.set(track,'class','playing');
+  },
   clear() {
     this.set('tracks',[]);
     this.set('currentPosition',0);
@@ -37,8 +43,10 @@ export default Ember.Service.extend({
     this.setPosition(this.get('currentPosition') - 1);
   },
   setPosition(i) {
+    var tracks = this.get('tracks');
     //As long as we are trying to set to a position that exists in our playlist
-    if(i < this.get('tracks').length) {
+    if(i < tracks.length) {
+
       this.set('currentPosition', i);
     } else {
       console.error('Trying to set to position that is larger that playlist');
@@ -46,6 +54,17 @@ export default Ember.Service.extend({
   },
   changeToPosition(i) {
     this.setPosition(i);
+  },
+  changeToTrack(track) {
+    var i = null;
+    _.map(this.get('tracks'),(t,c) => {
+      if(t === track) {
+        i = c;
+      }
+    });
+    if(i) {
+      this.changeToPosition(i);
+    }
   },
   incrementPlayCount() {
     if(config.incrementPlayCount) {

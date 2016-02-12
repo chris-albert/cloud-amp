@@ -31,6 +31,7 @@ export default Ember.Service.extend(Ember.Evented,{
   },
   sourceChanged() {
     this.set('status',null);
+    this.get('playlist').setCurrentPlaying();
     this.play();
   },
   play() {

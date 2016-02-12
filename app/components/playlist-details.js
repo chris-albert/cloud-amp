@@ -6,27 +6,14 @@ export default Ember.Component.extend({
   classNames: ['playlist-details'],
   playlist  : Ember.inject.service('playlist'),
   player    : Ember.inject.service('player'),
-  items: Ember.computed('playlist.tracks','playlist.currentPosition',function() {
-    var current = this.get('playlist.currentPosition');
-    console.log(this.get('playlist.tracks'));
-    return _.map(this.get('playlist.tracks'),(track,i) => {
-      var c = '';
-      if(i === current) {
-        c = 'playing';
-      }
-      return {
-        class : c,
-        id    : i,
-        values: [
-          track.artist.name + ' - ' + track.name,
-          textFormatters.duration(track.duration)
-        ]
-      };
-    });
-  }),
+  showHeaders: true,
+  columns: [
+    {name: 'name'},
+    {name: 'duration',format: 'duration'}
+  ],
   actions: {
-    selected(id) {
-      this.get('playlist').changeToPosition(id);
+    selected(track) {
+      this.get('playlist').changeToTrack(track);
       this.get('player').sourceChanged();
     }
   }
