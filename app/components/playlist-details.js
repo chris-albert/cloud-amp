@@ -8,7 +8,7 @@ export default Ember.Component.extend({
   player    : Ember.inject.service('player'),
   showHeaders: true,
   columns: [
-    {name: 'name'},
+    {names: ['artist.name','name'],join: ' - '},
     {name: 'duration',format: 'duration'}
   ],
   actions: {
