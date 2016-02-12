@@ -8,6 +8,7 @@ export default Ember.Component.extend({
   player    : Ember.inject.service('player'),
   items: Ember.computed('playlist.tracks','playlist.currentPosition',function() {
     var current = this.get('playlist.currentPosition');
+    console.log(this.get('playlist.tracks'));
     return _.map(this.get('playlist.tracks'),(track,i) => {
       var c = '';
       if(i === current) {

@@ -5,46 +5,43 @@ import textFormatters from '../utils/text-formatters';
 
 export default Ember.Component.extend({
   classNames    : ['media-browser'],
+  //Column mappings from configs
   artistColumns : config.columns.artist,
   albumColumns  : config.columns.album,
   trackColumns  : config.columns.track,
+  //Services
   playlist      : Ember.inject.service('playlist'),
   player        : Ember.inject.service('player'),
-  formats       : textFormatters,
+  //Component variables
+  artistSelected: null,
+  albumSelected : null,
   actions       : {
     artistClicked(artist) {
       this.set('artistSelected', artist.name);
     },
     albumClicked(album) {
-      this.set('albumSelected', album);
+      this.set('albumSelected', album.name);
     },
     trackClicked(track) {
-      this.get('playlist').addTrack(this.findTrack(track));
+      //Not quite sure what to do yet when track is clicked
     },
     artistDoubleClicked(artist) {
-      var playlist = this.get('playlist');
-      playlist.clear();
-      _.map(this.findArtist(artist).albums, albums => {
-        _.map(albums.tracks, track => {
-          playlist.addTrack(track);
-        });
-      });
-      this.get('player').sourceChanged();
+      this.changePlaylist(_.flatten(_.map(this.findArtist(artist.name).albums, albums => {
+        return albums.tracks;
+      })));
     },
     albumDoubleClicked(album) {
-      var playlist = this.get('playlist');
-      playlist.clear();
-      _.map(this.findAlbum(album).tracks, track => {
-        playlist.addTrack(track);
-      });
-      this.get('player').sourceChanged();
+      this.changePlaylist(this.findAlbum(album.name).tracks);
     },
     trackDoubleClicked(track) {
-      var playlist = this.get('playlist');
-      playlist.clear();
-      playlist.addTrack(this.findTrack(track));
-      this.get('player').sourceChanged();
+      this.changePlaylist([track]);
     }
+  },
+  changePlaylist(tracks) {
+    var playlist = this.get('playlist');
+    playlist.clear();
+    _.map(tracks,track => playlist.addTrack(track));
+    this.get('player').sourceChanged();
   },
   findArtist(artist) {
     return _.get(this.get('artistHash'), [artist]);
@@ -65,46 +62,6 @@ export default Ember.Component.extend({
       track
     ]);
   },
-  artistHeaders : Ember.computed('artistColumns', function () {
-    return _.map(this.get('artistColumns'), 'display');
-  }),
-  albumHeaders  : Ember.computed('albumColumns', function () {
-    return _.map(this.get('albumColumns'), 'display');
-  }),
-  trackHeaders  : Ember.computed('trackColumns', function () {
-    return _.map(this.get('trackColumns'), 'display');
-  }),
-  sorted(data, key) {
-    if (data) {
-      return data.sort((a, b) => {
-        if (a[key] < b[key]) return -1;
-        if (a[key] > b[key]) return 1;
-        return 0;
-      });
-    }
-  },
-  buildItems(columnsKey, data, sortBy) {
-    var columns = this.get(columnsKey);
-    return _.map(this.sorted(data, sortBy), artist => {
-      var item = _.map(columns, column => {
-        var value = _.get(artist, column.name);
-        if (!_.isUndefined(value)) {
-          var n = value;
-          if (column.format && _.isFunction(this.get('formats.' + column.format))) {
-            n = this.get('formats.' + column.format)(n);
-          }
-          return n;
-        }
-      });
-
-      return {
-        id    : artist.name,
-        values: item
-      };
-    });
-  },
-  artistSelected: null,
-  albumSelected : null,
   artistHash    : Ember.computed('model.artists', function () {
     return _.indexBy(_.map(this.get('model.artists'), artist => {
       artist.albumsHash = _.indexBy(artist.albums, 'name');
@@ -122,20 +79,19 @@ export default Ember.Component.extend({
   artists       : Ember.computed.func('model.artists', function (artists) {
     return artists;
   }),
-  albums        : Ember.computed('model.artists', 'artistSelected', function () {
-    var artist = this.get('artistHash')[this.get('artistSelected')];
+  albums        : Ember.computed.func('model.artists', 'artistSelected', function (artists,selected) {
+    var artist = this.get('artistHash')[selected];
     if (artist) {
-      return this.buildItems('albumColumns', artist.albums, 'year');
+      return artist.albums;
     }
   }),
-  tracks        : Ember.computed('model.artists', 'artistSelected', 'albumSelected', function () {
-    var artistSelected = this.get('artistSelected'),
-        albumSelected  = this.get('albumSelected');
+  tracks        : Ember.computed.func('model.artists', 'artistSelected', 'albumSelected',
+    function (artists,artistSelected,albumSelected) {
     if (artistSelected && albumSelected) {
       var album = _.get(this.get('artistHash'),
         [artistSelected, 'albumsHash', albumSelected]);
       if (album) {
-        return this.buildItems('trackColumns', album.tracks, 'trackNum');
+        return album.tracks;
       }
     }
   })

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Resolver from 'ember/resolver';
+import _ from 'lodash';
 import loadInitializers from 'ember/load-initializers';
 import config from './config/environment';
 
@@ -29,10 +30,16 @@ Ember.computed.switch = function(key,obj) {
   });
 };
 
-Ember.computed.func = function(key,func) {
-  return Ember.computed(key,function() {
-    return func.call(this,this.get(key));
-  });
+Ember.computed.func = function() {
+  var keys = _.initial(arguments),
+      func = _.last(arguments),
+      f = function() {
+        var args = _.map(keys,key => {
+          return this.get(key);
+        });
+        return func.apply(this,args);
+      };
+  return Ember.computed.apply(this,keys.concat([f]));
 };
 
 loadInitializers(App, config.modulePrefix);

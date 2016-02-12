@@ -1,26 +1,28 @@
 <div class="row media-browser-section">
-    {{browser-table-keys
-    items=artists
-    headers=artistColumns
-    sortBy="name"
-    click="artistClicked"
-    doubleClick="artistDoubleClicked"
-    classNames="col-md-6"
-    }}
-    {{browser-table
-    items=albums
-    headers=albumHeaders
-    action="albumClicked"
-    doubleClick="albumDoubleClicked"
-    classNames="col-md-6"
-    }}
+  {{browser-table-keys
+  items=artists
+  headers=artistColumns
+  sortBy="name"
+  click="artistClicked"
+  doubleClick="artistDoubleClicked"
+  classNames="col-md-6"
+  }}
+  {{browser-table-keys
+  items=albums
+  headers=albumColumns
+  sortBy="year"
+  click="albumClicked"
+  doubleClick="albumDoubleClicked"
+  classNames="col-md-6"
+  }}
 </div>
 <div class="row media-browser-section">
-    {{browser-table
-    items=tracks
-    headers=trackHeaders
-    action="trackClicked"
-    doubleClick="trackDoubleClicked"
-    classNames="col-md-12"
-    }}
+  {{browser-table-keys
+  items=tracks
+  headers=trackColumns
+  sortBy="trackNum"
+  click="trackClicked"
+  doubleClick="trackDoubleClicked"
+  classNames="col-md-12"
+  }}
 </div>
