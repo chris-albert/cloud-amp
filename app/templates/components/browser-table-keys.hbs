@@ -1,0 +1,23 @@
+<table class="table">
+  {{#if headers}}
+      <thead>
+      <tr>
+        {{#each headers as |header|}}
+            <th>{{header.display}}</th>
+        {{/each}}
+      </tr>
+      </thead>
+  {{/if}}
+    <tbody>
+    {{#each items as |item|}}
+        <tr class="browser-table-item {{item.class}}" {{action "itemClicked" item}}
+          {{action "doubleClicked" item on="doubleClick" }}>
+          {{#each-in item as |column value|}}
+              {{log column}}
+
+              <td>{{column}}</td>
+          {{/each-in}}
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

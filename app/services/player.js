@@ -24,9 +24,6 @@ export default Ember.Service.extend(Ember.Evented,{
       this.sourceChanged();
     });
   },
-  almostDone: Ember.computed.func('currentTime',currentTime => {
-
-  }),
   audioEnded() {
     this.get('playlist').incrementPlayCount();
     this.get('playlist').next();

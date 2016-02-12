@@ -119,6 +119,9 @@ export default Ember.Component.extend({
       return artist;
     }), 'name');
   }),
+  artistsKeys       : Ember.computed.func('model.artists', function (artists) {
+    return artists;
+  }),
   artists       : Ember.computed('model.artists', function () {
     return this.buildItems('artistColumns', this.get('model.artists'), 'name');
   }),
