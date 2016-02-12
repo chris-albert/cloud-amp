@@ -1,5 +1,5 @@
 <div class="row media-browser-section">
-  {{browser-table-keys
+  {{hash-table
   items=artists
   headers=artistColumns
   sortBy="name"
@@ -8,7 +8,7 @@
   doubleClick="artistDoubleClicked"
   classNames="col-md-6"
   }}
-  {{browser-table-keys
+  {{hash-table
   items=albums
   headers=albumColumns
   sortBy="year"
@@ -19,7 +19,7 @@
   }}
 </div>
 <div class="row media-browser-section">
-  {{browser-table-keys
+  {{hash-table
   items=tracks
   headers=trackColumns
   sortBy="trackNum"

@@ -2,7 +2,7 @@ import Ember from 'ember';
 import _ from 'lodash';
 import textFormatters from '../utils/text-formatters';
 
-function hashLookup(params) {
+function hashTableLookup(params) {
 
   if(params.length >= 2) {
     var obj = params[0],
@@ -22,4 +22,4 @@ function hashLookup(params) {
   }
 }
 
-export default Ember.Helper.helper(hashLookup);
+export default Ember.Helper.helper(hashTableLookup);

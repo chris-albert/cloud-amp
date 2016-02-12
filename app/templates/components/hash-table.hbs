@@ -13,7 +13,7 @@
         <tr class="browser-table-item {{item.class}}" {{action "itemClicked" item}}
           {{action "doubleClicked" item on="doubleClick" }}>
           {{#each headers as |header|}}
-              <td>{{hash-lookup item header}}</td>
+              <td>{{hash-table-lookup item header}}</td>
           {{/each}}
         </tr>
     {{/each}}
