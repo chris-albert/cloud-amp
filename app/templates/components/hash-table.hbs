@@ -10,8 +10,8 @@
   {{/if}}
     <tbody>
     {{#each sortedItems as |item|}}
-        <tr class="browser-table-item {{item.class}}" {{action "itemClicked" item}}
-          {{action "doubleClicked" item on="doubleClick" }}>
+        <tr class="browser-table-item {{if item.playing "playing" ""}}" {{action "itemClicked" item}}
+          {{action "doubleClicked" item on="doubleClick"}}>
           {{#each headers as |header|}}
               <td>{{hash-table-lookup item header}}</td>
           {{/each}}

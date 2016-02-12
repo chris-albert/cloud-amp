@@ -26,8 +26,8 @@ export default Ember.Service.extend({
   },
   setCurrentPlaying() {
     var track = this.getCurrentTrackInfo();
-    _.map(this.get('tracks'),track => Ember.set(track,'class',null));
-    Ember.set(track,'class','playing');
+    _.map(this.get('tracks'),track => Ember.set(track,'playing',false));
+    Ember.set(track,'playing',true);
   },
   clear() {
     this.set('tracks',[]);

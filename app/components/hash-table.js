@@ -30,11 +30,11 @@ export default Ember.Component.extend({
       });
     }
   },
-  sortedItems: Ember.computed('items.@each.class',function() {
-    //Here we reset the items so the sort is preserved
+  sortedItems: Ember.computed('items.@each.playing',function() {
     var sortBy = this.get('sortBy'),
       items = this.get('items');
     if(sortBy) {
+      //Here we reset the items so the sort is preserved
       this.set('items',this.sorted(items,this.get('sortBy')));
     }
     return items;
