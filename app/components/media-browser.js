@@ -13,7 +13,7 @@ export default Ember.Component.extend({
   formats       : textFormatters,
   actions       : {
     artistClicked(artist) {
-      this.set('artistSelected', artist);
+      this.set('artistSelected', artist.name);
     },
     albumClicked(album) {
       this.set('albumSelected', album);
@@ -119,11 +119,8 @@ export default Ember.Component.extend({
       return artist;
     }), 'name');
   }),
-  artistsKeys       : Ember.computed.func('model.artists', function (artists) {
+  artists       : Ember.computed.func('model.artists', function (artists) {
     return artists;
-  }),
-  artists       : Ember.computed('model.artists', function () {
-    return this.buildItems('artistColumns', this.get('model.artists'), 'name');
   }),
   albums        : Ember.computed('model.artists', 'artistSelected', function () {
     var artist = this.get('artistHash')[this.get('artistSelected')];

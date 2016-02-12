@@ -31,7 +31,7 @@ Ember.computed.switch = function(key,obj) {
 
 Ember.computed.func = function(key,func) {
   return Ember.computed(key,function() {
-    return func(this.get(key));
+    return func.call(this,this.get(key));
   });
 };
 
