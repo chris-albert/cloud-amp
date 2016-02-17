@@ -40,7 +40,7 @@ export default Ember.Component.extend({
   changePlaylist(tracks) {
     var playlist = this.get('playlist');
     playlist.clear();
-    _.map(tracks,track => playlist.addTrack(track));
+    _.map(tracks, track => playlist.addTrack(track));
     this.get('player').sourceChanged();
   },
   findArtist(artist) {
@@ -77,22 +77,36 @@ export default Ember.Component.extend({
     }), 'name');
   }),
   artists       : Ember.computed.func('model.artists', function (artists) {
+    artists.unshift(this.buildAll(artists, 'artists', 'albums'));
     return artists;
   }),
-  albums        : Ember.computed.func('model.artists', 'artistSelected', function (artists,selected) {
+  albums        : Ember.computed.func('model.artists', 'artistSelected', function (artists, selected) {
     var artist = this.get('artistHash')[selected];
     if (artist) {
+      artist.albums.unshift(this.buildAll(artist.albums, 'albums', 'tracks'));
       return artist.albums;
     }
   }),
   tracks        : Ember.computed.func('model.artists', 'artistSelected', 'albumSelected',
-    function (artists,artistSelected,albumSelected) {
-    if (artistSelected && albumSelected) {
-      var album = _.get(this.get('artistHash'),
-        [artistSelected, 'albumsHash', albumSelected]);
-      if (album) {
-        return album.tracks;
+    function (artists, artistSelected, albumSelected) {
+      if (artistSelected && albumSelected) {
+        var album = _.get(this.get('artistHash'),
+          [artistSelected, 'albumsHash', albumSelected]);
+        if (album) {
+          console.log(album);
+          return album.tracks;
+        }
       }
-    }
-  })
+    }),
+  buildAll(things, nameName, nestKey) {
+    var all      = {
+      name       : 'All (' + things.length + ' ' + nameName + ')',
+      albumsCount: _.reduce(things, (sum, thing) => sum + thing.albumsCount, 0),
+      tracksCount: _.reduce(things, (sum, thing) => sum + thing.tracksCount, 0),
+      played     : _.reduce(things, (sum, thing) => sum + thing.played, 0),
+      duration   : _.reduce(things, (sum, thing) => sum + thing.duration, 0)
+    };
+    all[nestKey] = _.flatten(_.map(things, t => t[nestKey]));
+    return all;
+  }
 });
