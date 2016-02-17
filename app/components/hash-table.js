@@ -30,7 +30,7 @@ export default Ember.Component.extend({
       });
     }
   },
-  sortedItems: Ember.computed('items.@each.playing',function() {
+  sortedItems: Ember.computed('items.@each.playing','items.@each.played',function() {
     var sortBy = this.get('sortBy'),
       items = this.get('items');
     if(sortBy) {

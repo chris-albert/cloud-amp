@@ -71,7 +71,7 @@ export default Ember.Service.extend({
       var currTrack = this.getCurrentTrackInfo();
       this.get('google').playCount(currTrack.id)
         .then(isSuccess => {
-          console.log('yeay: ' + isSuccess);
+          Ember.set(currTrack,'played',currTrack.played + 1);
         });
     }
   },
