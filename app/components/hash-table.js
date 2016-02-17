@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import _ from 'lodash';
 
 export default Ember.Component.extend({
   classNames: ['browser-table'],
@@ -20,6 +21,9 @@ export default Ember.Component.extend({
   sorted(data, key) {
     if (data) {
       return data.sort((a, b) => {
+        if(a.name && _.startsWith(a.name,'All (')) {
+          return -1;
+        }
         if (a[key] < b[key]) {
           return -1;
         }

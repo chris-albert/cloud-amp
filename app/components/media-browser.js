@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import _ from 'lodash';
 import config from 'cloud-amp/config/environment';
-import textFormatters from '../utils/text-formatters';
 
 export default Ember.Component.extend({
   classNames    : ['media-browser'],
@@ -17,21 +16,21 @@ export default Ember.Component.extend({
   albumSelected : null,
   actions       : {
     artistClicked(artist) {
-      this.set('artistSelected', artist.name);
+      this.set('artistSelected', artist);
     },
     albumClicked(album) {
-      this.set('albumSelected', album.name);
+      this.set('albumSelected', album);
     },
-    trackClicked(track) {
+    trackClicked() {
       //Not quite sure what to do yet when track is clicked
     },
     artistDoubleClicked(artist) {
-      this.changePlaylist(_.flatten(_.map(this.findArtist(artist.name).albums, albums => {
+      this.changePlaylist(_.flatten(_.map(artist.albums, albums => {
         return albums.tracks;
       })));
     },
     albumDoubleClicked(album) {
-      this.changePlaylist(this.findAlbum(album.name).tracks);
+      this.changePlaylist(album.tracks);
     },
     trackDoubleClicked(track) {
       this.changePlaylist([track]);
@@ -43,57 +42,20 @@ export default Ember.Component.extend({
     _.map(tracks, track => playlist.addTrack(track));
     this.get('player').sourceChanged();
   },
-  findArtist(artist) {
-    return _.get(this.get('artistHash'), [artist]);
-  },
-  findAlbum(album) {
-    return _.get(this.get('artistHash'), [
-      this.get('artistSelected'),
-      'albumsHash',
-      album
-    ]);
-  },
-  findTrack(track) {
-    return _.get(this.get('artistHash'), [
-      this.get('artistSelected'),
-      'albumsHash',
-      this.get('albumSelected'),
-      'tracksHash',
-      track
-    ]);
-  },
-  artistHash    : Ember.computed('model.artists', function () {
-    return _.indexBy(_.map(this.get('model.artists'), artist => {
-      artist.albumsHash = _.indexBy(artist.albums, 'name');
-      _.map(artist.albumsHash, album => {
-        album.artist     = artist;
-        album.tracksHash = _.indexBy(album.tracks, 'name');
-        _.map(album.tracks, track => {
-          track.artist = artist;
-          track.album  = album;
-        });
-      });
-      return artist;
-    }), 'name');
-  }),
   artists       : Ember.computed.func('model.artists', function (artists) {
-    artists.unshift(this.buildAll(artists, 'artists', 'albums'));
-    return artists;
+    return artists.concat(this.buildAll(artists, 'artists', 'albums'));
   }),
   albums        : Ember.computed.func('model.artists', 'artistSelected', function (artists, selected) {
-    var artist = this.get('artistHash')[selected];
+    var artist = selected;
     if (artist) {
-      artist.albums.unshift(this.buildAll(artist.albums, 'albums', 'tracks'));
-      return artist.albums;
+      return artist.albums.concat(this.buildAll(artist.albums, 'albums', 'tracks'));
     }
   }),
   tracks        : Ember.computed.func('model.artists', 'artistSelected', 'albumSelected',
     function (artists, artistSelected, albumSelected) {
       if (artistSelected && albumSelected) {
-        var album = _.get(this.get('artistHash'),
-          [artistSelected, 'albumsHash', albumSelected]);
+        var album = albumSelected;
         if (album) {
-          console.log(album);
           return album.tracks;
         }
       }
