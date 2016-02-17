@@ -26,8 +26,9 @@ export default Ember.Service.extend(Ember.Evented,{
   },
   audioEnded() {
     this.get('playlist').incrementPlayCount();
-    this.get('playlist').next();
-    this.sourceChanged();
+    if(this.get('playlist').next()) {
+      this.sourceChanged();
+    }
   },
   sourceChanged() {
     this.set('status',null);

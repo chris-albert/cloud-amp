@@ -35,6 +35,12 @@ export default Ember.Component.extend(Ember.Evented,{
     },
     mute() {
       this.set('muted', this.get('player').toggleMute());
+    },
+    repeat() {
+      this.toggleProperty('playlist.repeat');
+    },
+    random() {
+      this.toggleProperty('playlist.random');
     }
   },
   init: function() {

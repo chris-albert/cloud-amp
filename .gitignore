@@ -18,3 +18,4 @@ testem.log
 .idea
 cloud-amp.iml
 www.cloudamp.io.tar.gz
+.DS_Store

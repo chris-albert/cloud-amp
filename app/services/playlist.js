@@ -6,6 +6,8 @@ export default Ember.Service.extend({
   tracks: null,
   currentPosition: 0,
   trackChanged: false,
+  repeat: false,
+  random: false,
   google: Ember.inject.service('google-play-resource'),
   init() {
     this.set('tracks',[]);
@@ -37,20 +39,44 @@ export default Ember.Service.extend({
    * Advances the playlist to the next item in list
    */
   next() {
-    this.setPosition(this.get('currentPosition') + 1);
+    return this.setPosition(this.getNextPosition());
   },
   prev() {
-    this.setPosition(this.get('currentPosition') - 1);
+    return this.setPosition(this.get('currentPosition') - 1);
+  },
+  getNextPosition() {
+    var cp = this.get('currentPosition');
+    if(this.get('random')) {
+      var np;
+      do {
+        np = this.getRandomIntInclusive(0,this.getLength());
+      } while(np === cp);
+      return np;
+    }
+    return this.get('currentPosition') + 1;
+  },
+  getLength() {
+    var tracks = this.get('tracks');
+    if(tracks) {
+      return tracks.length;
+    }
+    return 0;
   },
   setPosition(i) {
-    var tracks = this.get('tracks');
-    //As long as we are trying to set to a position that exists in our playlist
+    var tracks = this.get('tracks'),
+        repeat = this.get('repeat');
     if(i < tracks.length) {
-
+      //If we are not at the end of the playlist
       this.set('currentPosition', i);
+      return true;
+    } else if(repeat) {
+      //If we are at the end of the playlist but we are repeat
+      this.get('currentPosition',0);
+      return true;
     } else {
       console.error('Trying to set to position that is larger that playlist');
     }
+    return false;
   },
   changeToPosition(i) {
     this.setPosition(i);
@@ -103,5 +129,8 @@ export default Ember.Service.extend({
     if(this.get('currentPosition') + 1 < this.get('tracks').length) {
       this.getStreamUrl(this.get('tracks')[this.get('currentPosition') + 1]);
     }
+  },
+  getRandomIntInclusive(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 });
