@@ -24,6 +24,9 @@ export default Ember.Component.extend({
         if(a.name && _.startsWith(a.name,'All (')) {
           return -1;
         }
+        if(b.name && _.startsWith(b.name,'All (')) {
+          return 1;
+        }
         if (a[key] < b[key]) {
           return -1;
         }
