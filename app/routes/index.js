@@ -5,7 +5,7 @@ export default Ember.Route.extend({
   google: Ember.inject.service('google-play-resource'),
   model() {
     var google = this.get('google');
-    if(google.hasToken() && false) {
+    if(google.hasToken()) {
       return google.getLibrary()
         .then(l => this.wireUpRelations(l));
     }
