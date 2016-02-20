@@ -4,6 +4,8 @@ export default Ember.Object.extend(Ember.Evented,{
   context  : null,
   source: null,
   audio: null,
+  volume: 1,
+  muted: false,
   init() {
 
   },
@@ -31,6 +33,8 @@ export default Ember.Object.extend(Ember.Evented,{
     audio.crossOrigin = "anonymous";
     audio.src = url;
     audio.autoplay = true;
+    audio.volume = this.get('volume');
+    audio.muted = this.get('muted');
     audio.addEventListener('ended',() => {
       this.trigger('ended');
     });
@@ -58,9 +62,11 @@ export default Ember.Object.extend(Ember.Evented,{
   toggleMute() {
     var was = this.get('audio').muted;
     this.get('audio').muted = !was;
+    this.set('muted',!was);
     return !was;
   },
   changeVolume(volume) {
+    this.set('volume',volume);
     this.get('audio').volume = volume / 100;
   },
   sampleRate() {
