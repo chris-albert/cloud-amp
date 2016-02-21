@@ -33,17 +33,13 @@
             </button>
         </div>
         <div class="col-md-9">
-            <div class="volume-slider"></div>
+            <div class="media-slider volume-slider"></div>
         </div>
     </div>
 </div>
-<div class="progress">
-    <div class="progress-bar progress-played" role="progressbar" aria-valuenow="{{percentComplete}}"
-         aria-valuemin="0" aria-valuemax="100" style="width: 0;">
-    </div>
-    <div class="progress-bar progress-buffered" role="progressbar" aria-valuenow="{{bufferedAhead}}"
-         aria-valuemin="0" aria-valuemax="100" style="width: 0;">
-    </div>
+<div class="media-slider progress-slider">
+    <div class="hidden">{{percentComplete}}{{bufferedAhead}}</div>
+    <div class="slider-buffered"></div>
 </div>
 <div class="controls">
     <div class="row">

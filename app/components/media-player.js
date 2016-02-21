@@ -48,6 +48,7 @@ export default Ember.Component.extend(Ember.Evented,{
       this.setupEq();
     });
     this.on('volumeChanged',this.volumeChange);
+    this.on('progressChanged',this.progressChange);
     this._super();
   },
   didInsertElement() {
@@ -60,34 +61,43 @@ export default Ember.Component.extend(Ember.Evented,{
           self.trigger('volumeChanged',ui.value);
         }
       });
+    this.set('progress-slider-el',this.$('.progress-slider')
+      .slider({
+        range: 'min',
+        value: 0,
+        step: .01,
+        animate: true,
+        slide: function(e,ui) {
+          self.trigger('progressChanged',ui.value);
+        }
+      }));
+    this.set('progress-slider-buffered',this.$('.slider-buffered'));
+  },
+  progressChange(value) {
+    this.get('player').seek(value);
   },
   volumeChange(value) {
     this.get('player').changeVolume(value);
   },
   muteIcon: Ember.computed.if('muted','up','off'),
-  //Using jquery here to update the progress bar since ember.js
-  //gets really mad at you if you change inline styles
   percentComplete: Ember.computed('player.currentTime',function() {
-    var pb = this.get('cachedProgressBarEl'),
-        t = this.get('playlist').getCurrentTrackInfo();
-    if(!pb) {
-      pb = this.$('.progress-played');
-      this.set('cachedProgressBarEl',pb);
-    }
-    if(t && pb) {
-      pb.css('width',((this.get('player.currentTime') / t.duration) * 100) + '%');
+    var slider = this.get('progress-slider-el'),
+             t = this.get('playlist').getCurrentTrackInfo();
+    if(slider && t) {
+      slider.slider('value', ((this.get('player.currentTime') / t.duration) * 100));
     }
     return null;
   }),
   bufferedAhead: Ember.computed('player.bufferedTime',function() {
-    var pb = this.get('cachedProgressBarBufferedEl'),
-      t = this.get('playlist').getCurrentTrackInfo();
-    if(!pb) {
-      pb = this.$('.progress-buffered');
-      this.set('cachedProgressBarBufferedEl',pb);
-    }
+    var pb = this.get('progress-slider-buffered'),
+         t = this.get('playlist').getCurrentTrackInfo();
     if(t && pb) {
-      pb.css('width',(((this.get('player.bufferedTime') - this.get('player.currentTime')) / t.duration) * 100) + '%');
+      var time = (this.get('player.bufferedTime') / t.duration) * 100;
+      //For some reason this can calculate to more that 100%
+      if(time > 100) {
+        time = 100;
+      }
+      pb.css('width',time + '%');
     }
     return null;
   }),

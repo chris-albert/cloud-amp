@@ -21,11 +21,15 @@ export default Ember.Object.extend(Ember.Evented,{
       this.set('context',context);
     }
     this.set('audio',audio);
+    var firstCanPlay = true;
     audio.addEventListener('canplay',() => {
-      var source = context.createMediaElementSource(audio);
-      source.connect(context.destination);
-      this.set('source',source);
-      this.trigger('canplay');
+      if(firstCanPlay) {
+        var source = context.createMediaElementSource(audio);
+        source.connect(context.destination);
+        this.set('source', source);
+        this.trigger('canplay');
+        firstCanPlay = false;
+      }
     });
   },
   createAudio(url) {

@@ -60,6 +60,11 @@ export default Ember.Service.extend(Ember.Evented,{
     }
     this.set('status','playing');
   },
+  seek(value) {
+    var playlist = this.get('playlist').getCurrentTrackInfo();
+    var timeToSeek = (playlist.duration / 1000) * (value / 100);
+    this.get('audio').seek(timeToSeek);
+  },
   changeVolume(volume) {
     this.get('audio').changeVolume(volume);
   },
