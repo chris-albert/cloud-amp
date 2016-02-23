@@ -4,7 +4,7 @@ export default Ember.Object.extend(Ember.Evented,{
   context  : null,
   source: null,
   audio: null,
-  volume: 1,
+  volume: 100,
   muted: false,
   init() {
 
@@ -37,7 +37,8 @@ export default Ember.Object.extend(Ember.Evented,{
     audio.crossOrigin = "anonymous";
     audio.src = url;
     audio.autoplay = true;
-    audio.volume = this.get('volume');
+    audio.preload = 'auto';
+    audio.volume = this.get('volume') / 100;
     audio.muted = this.get('muted');
     audio.addEventListener('ended',() => {
       this.trigger('ended');

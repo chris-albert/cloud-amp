@@ -30,12 +30,12 @@ export default Ember.Service.extend(Ember.Evented,{
       this.sourceChanged();
     }
   },
-  sourceChanged() {
+  sourceChanged(time) {
     this.set('status',null);
     this.get('playlist').setCurrentPlaying();
-    this.play();
+    this.play(time);
   },
-  play() {
+  play(time) {
     this.startUpdater();
     var status = this.get('status');
     if (status === 'paused') {
@@ -51,14 +51,32 @@ export default Ember.Service.extend(Ember.Evented,{
         .then(t => {
           var audio = this.get('audio');
           audio.setAutoPlay(true);
+
           audio.setSrc(t.stream.url);
           this.set('almostDoneFired',false);
           audio.on('canplay',() => {
             this.trigger('playing');
+            if(time) {
+              audio.seek(time);
+            }
+          });
+          audio.on('error',(e) => {
+            this.audioError();
           });
         });
     }
     this.set('status','playing');
+  },
+  audioError() {
+    var i = 0,
+        self = this;
+    return function() {
+      if(i < 1) {
+        self.get('playlist').unsetCurrentStreamUrl();
+        self.sourceChanged(self.get('lastGoodTimeInSec'));
+        i++;
+      }
+    }();
   },
   seek(value) {
     var playlist = this.get('playlist').getCurrentTrackInfo();
@@ -89,6 +107,9 @@ export default Ember.Service.extend(Ember.Evented,{
           ct = this.get('audio').currentTime();
       this.set('currentTime', ct * 1000);
       this.set('bufferedTime',audio.bufferedTime() * 1000);
+      if(ct != 0) {
+        this.set('lastGoodTimeInSec',ct);
+      }
       if(audio.totalTime() && audio.totalTime() - 20 < ct && !this.get('almostDoneFired')) {
         this.get('playlist').cacheNextStreamUrl();
         this.set('almostDoneFired',true);
