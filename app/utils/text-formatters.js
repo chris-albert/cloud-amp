@@ -9,10 +9,15 @@ export default {
       return num;
     }
     var m = moment.duration(d),
-      d = pad(m.minutes())+ ':' + pad(m.seconds());
-    if(m.hours() >= 1) {
-      d = m.hours() + ':' + d;
+      d = pad(m.minutes())+ ':' + pad(m.seconds()),
+      hours = m.hours();
+    if(m.days() >= 1) {
+      hours = m.days() * 24;
     }
+    if(hours >= 1) {
+      d = hours + ':' + d;
+    }
+
     return d;
   }
 };
