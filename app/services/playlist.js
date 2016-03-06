@@ -9,6 +9,7 @@ export default Ember.Service.extend({
   repeat: false,
   random: false,
   library: Ember.inject.service('library'),
+  history: Ember.inject.service('history'),
   init() {
     this.set('tracks',[]);
   },
@@ -93,13 +94,14 @@ export default Ember.Service.extend({
     }
   },
   incrementPlayCount() {
+    var currTrack = this.getCurrentTrackInfo();
     if(config.incrementPlayCount || true) {
-      var currTrack = this.getCurrentTrackInfo();
       this.get('library').incrementPlayCount(currTrack.source,currTrack.id)
         .then(isSuccess => {
           Ember.set(currTrack,'played',currTrack.played + 1);
         });
     }
+    this.get('history').addHistory(currTrack);
   },
   /**
    * Gets the stream url from the server

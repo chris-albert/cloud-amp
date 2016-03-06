@@ -6,6 +6,7 @@ export default Ember.Component.extend({
   actions: {
     onlineClick(source) {
       this.setLibrary(source);
+      this.sendAction('libraryViewChanged','online');
     },
     onlineServicesClick() {
       var open = this.$('.online-services.open');
@@ -26,7 +27,7 @@ export default Ember.Component.extend({
       }
     },
     historyClicked() {
-      console.log('cool story bro');
+      this.sendAction('libraryViewChanged','history');
     }
   },
   setSelected(source) {

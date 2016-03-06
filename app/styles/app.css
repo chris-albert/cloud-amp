@@ -71,6 +71,16 @@ body {
   cursor: pointer;
 }
 
+.media-library {
+  height: 100%;
+}
+
+.history-table {
+  height: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 /*
  Media browser
 */

@@ -19,5 +19,8 @@ export default {
     }
 
     return d;
+  },
+  date: function(d) {
+    return moment(d).format();
   }
 };

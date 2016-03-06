@@ -1,0 +1,10 @@
+<div class="col-md-2 media-selector">
+  {{media-selector libraryViewChanged=(action "libraryViewChanged")}}
+</div>
+{{#if onlineSelected}}
+  {{media-browser}}
+{{/if}}
+
+{{#if historySelected}}
+  {{history-table}}
+{{/if}}
