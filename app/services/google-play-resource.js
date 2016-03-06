@@ -22,7 +22,7 @@ export default Ember.Service.extend({
         r(token);
       });
     } else {
-      return Ember.$.getJSON(this.get('baseUrl') + '/token', {
+      return Ember.$.getJSON(this.get('baseUrl') + '/token?source=google', {
         user: user, pass: pass
       }).then(t => {
         if(t.token) {
@@ -37,17 +37,17 @@ export default Ember.Service.extend({
       {token: this.getToken()});
   },
   getLibrary() {
-    return this.request('/library');
+    return this.request('/library?source=google');
   },
   getStreamUrl(id) {
-    return this.request('/stream/url/' + id)
+    return this.request('/stream/url/' + id + '?source=google')
       .then(d => {
-        d.url = this.get('baseUrl') + '/stream/data?url= ' + encodeURIComponent(d.url);
+        d.url = this.get('baseUrl') + '/stream/data?source=google&url= ' + encodeURIComponent(d.url);
         return d;
       });
   },
   playCount(id) {
-    return this.request('/count/' + id)
+    return this.request('/count/' + id + '?source=google')
       .then(d => {
         return d.status === 'ok';
       });

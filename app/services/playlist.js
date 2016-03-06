@@ -8,7 +8,7 @@ export default Ember.Service.extend({
   trackChanged: false,
   repeat: false,
   random: false,
-  google: Ember.inject.service('google-play-resource'),
+  library: Ember.inject.service('library'),
   init() {
     this.set('tracks',[]);
   },
@@ -93,9 +93,9 @@ export default Ember.Service.extend({
     }
   },
   incrementPlayCount() {
-    if(config.incrementPlayCount) {
+    if(config.incrementPlayCount || true) {
       var currTrack = this.getCurrentTrackInfo();
-      this.get('google').playCount(currTrack.id)
+      this.get('library').incrementPlayCount(currTrack.source,currTrack.id)
         .then(isSuccess => {
           Ember.set(currTrack,'played',currTrack.played + 1);
         });
@@ -108,13 +108,12 @@ export default Ember.Service.extend({
    * tracks `stream` parameter. Then next time we can just get it from the
    * cached param.
    * @param track Track to
-   * @returns {*}
    */
   getStreamUrl(track) {
     if(track.stream) {
       return new Ember.RSVP.Promise(r => r(track));
     } else {
-      return this.get('google').getStreamUrl(track.id)
+      return this.get('library').getStreamUrl(track.source,track.id)
         .then(data => {
           this.notifyPropertyChange('tracks');
           track.stream = data;

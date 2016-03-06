@@ -1,31 +1,37 @@
-<div class="row media-browser-section">
-  {{hash-table
-  items=artists
-  headers=artistColumns
-  sortBy="name"
-  showHeaders=true
-  click="artistClicked"
-  doubleClick="artistDoubleClicked"
-  classNames="col-md-6"
-  }}
-  {{hash-table
-  items=albums
-  headers=albumColumns
-  sortBy="year"
-  showHeaders=true
-  click="albumClicked"
-  doubleClick="albumDoubleClicked"
-  classNames="col-md-6"
-  }}
+<div class="col-md-2 media-selector">
+    {{media-selector}}
 </div>
-<div class="row media-browser-section">
-  {{hash-table
-  items=tracks
-  headers=trackColumns
-  sortBy="trackNum"
-  showHeaders=true
-  click="trackClicked"
-  doubleClick="trackDoubleClicked"
-  classNames="col-md-12"
-  }}
+<div class="row col-md-10 media-tables">
+    {{libraryWatcher}}
+    <div class="row media-browser-section">
+      {{hash-table
+      items=artists
+      headers=artistColumns
+      sortBy="name"
+      showHeaders=true
+      click="artistClicked"
+      doubleClick="artistDoubleClicked"
+      classNames="col-md-6"
+      }}
+      {{hash-table
+      items=albums
+      headers=albumColumns
+      sortBy="year"
+      showHeaders=true
+      click="albumClicked"
+      doubleClick="albumDoubleClicked"
+      classNames="col-md-6"
+      }}
+    </div>
+    <div class="row media-browser-section">
+      {{hash-table
+      items=tracks
+      headers=trackColumns
+      sortBy="trackNum"
+      showHeaders=true
+      click="trackClicked"
+      doubleClick="trackDoubleClicked"
+      classNames="col-md-12"
+      }}
+    </div>
 </div>

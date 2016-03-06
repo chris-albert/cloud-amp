@@ -3,7 +3,7 @@ import _ from 'lodash';
 import config from 'cloud-amp/config/environment';
 
 export default Ember.Component.extend({
-  classNames    : ['media-browser'],
+  classNames    : ['media-browser','row'],
   //Column mappings from configs
   artistColumns : config.columns.artist,
   albumColumns  : config.columns.album,
@@ -11,9 +11,13 @@ export default Ember.Component.extend({
   //Services
   playlist      : Ember.inject.service('playlist'),
   player        : Ember.inject.service('player'),
+  library       : Ember.inject.service('library'),
   //Component variables
   artistSelected: null,
   albumSelected : null,
+  ld: {
+    artists: []
+  },
   actions       : {
     artistClicked(artist) {
       this.set('artistSelected', artist);
@@ -42,16 +46,22 @@ export default Ember.Component.extend({
     _.map(tracks, track => playlist.addTrack(track));
     this.get('player').sourceChanged();
   },
-  artists       : Ember.computed.func('model.artists', function (artists) {
-    return artists.concat(this.buildAll(artists, 'artists', 'albums'));
+  libraryWatcher: Ember.computed.func('library.library',function(lib) {
+    this.set('ld',lib);
+    return '';
   }),
-  albums        : Ember.computed.func('model.artists', 'artistSelected', function (artists, selected) {
+  artists       : Ember.computed.func('ld.artists', function (artists) {
+    if(artists) {
+      return artists.concat(this.buildAll(artists, 'artists', 'albums'));
+    }
+  }),
+  albums        : Ember.computed.func('ld.artists', 'artistSelected', function (artists, selected) {
     var artist = selected;
     if (artist) {
       return artist.albums.concat(this.buildAll(artist.albums, 'albums', 'tracks'));
     }
   }),
-  tracks        : Ember.computed.func('model.artists', 'artistSelected', 'albumSelected',
+  tracks        : Ember.computed.func('ld.artists', 'artistSelected', 'albumSelected',
     function (artists, artistSelected, albumSelected) {
       if (artistSelected && albumSelected) {
         var album = albumSelected;
