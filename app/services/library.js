@@ -44,6 +44,7 @@ export default Ember.Service.extend({
       if (media.hasToken(source)) {
         return this.fetchLibrary(source);
       }
+      return new Ember.RSVP.Promise(cb => cb());
     }
   },
   fetchLibrary(source) {

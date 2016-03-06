@@ -36,6 +36,9 @@ body {
   height: 100%;
 }
 
+/*
+ Media selector
+*/
 .media-selector {
   height: 100%;
   margin-right: 15px;
@@ -44,12 +47,33 @@ body {
   color: #819FAB;
   font-size: 12px;
   padding-top: 5px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.media-selector .selector-item {
+  padding-left: 5px;
+}
+
+.media-selector .selector-item.selected {
+  background-color: #20222C;
+  color: #C8C8C8;
+}
+
+.media-selector .selector-item:hover {
+  background-color: #20222C;
+  color: #C8C8C8;
+  cursor: pointer;
 }
 
 .media-selector .selector-service {
-  padding-left: 10px;
+  padding-left: 15px;
   cursor: pointer;
 }
+
+/*
+ Media browser
+*/
 
 .media-browser {
   height:86%;

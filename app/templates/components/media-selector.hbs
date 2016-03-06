@@ -1,5 +1,25 @@
-<div>Online Services</div>
-<div class="selector-service" {{action "onlineClick" "all"}}><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> All</div>
-<div class="selector-service" {{action "onlineClick" "google"}}><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> Google Play</div>
-<div class="selector-service" {{action "onlineClick" "spotify"}}><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> Spotify</div>
-<div class="selector-service" {{action "onlineClick" "cloudamp"}}><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> CloudAmp</div>
+<!--Now Playing-->
+<div class="selector-item online-services open" {{action "onlineServicesClick"}}>
+    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+    Online Services
+ </div>
+<div class="selector-service selector-item all" {{action "onlineClick" "all"}}>
+    <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> All
+</div>
+<div class="selector-service selector-item google" {{action "onlineClick" "google"}}>
+    <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> Google Play
+</div>
+<div class="selector-service selector-item spotify" {{action "onlineClick" "spotify"}}>
+    <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> Spotify
+</div>
+<div class="selector-service selector-item cloudamp" {{action "onlineClick" "cloudamp"}}>
+    <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> CloudAmp
+</div>
+<!--Recently Added-->
+<!--Recently Played-->
+<!--Never Played-->
+<div class="selector-item" {{action "historyClicked"}}>
+    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+    History
+</div>
+<!--Last Played | Play Count | Title | Length | Filename-->
