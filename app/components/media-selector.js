@@ -28,6 +28,9 @@ export default Ember.Component.extend({
     },
     historyClicked() {
       this.sendAction('libraryViewChanged','history');
+    },
+    settingsClicked() {
+      this.sendAction('libraryViewChanged','settings');
     }
   },
   setSelected(source) {

@@ -10,6 +10,9 @@ export default Ember.Component.extend({
   historySelected: Ember.computed.func('libraryView',function(type) {
     return type === 'history';
   }),
+  settingsSelected: Ember.computed.func('libraryView',function(type) {
+    return type === 'settings';
+  }),
   actions: {
     libraryViewChanged(d) {
       this.set('libraryView',d);

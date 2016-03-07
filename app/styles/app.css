@@ -81,6 +81,13 @@ body {
   padding-right: 0;
 }
 
+.settings-page {
+  height: 100%;
+  border: 5px solid #262A2A;
+  background-color: #090A0A;
+  color: #819FAB;
+}
+
 /*
  Media browser
 */

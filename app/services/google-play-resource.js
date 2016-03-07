@@ -27,8 +27,9 @@ export default Ember.Service.extend({
       }).then(t => {
         if(t.token) {
           this.get('storage').setCache('google-token', t.token);
-          return t.token;
+          return t;
         }
+        return {};
       });
     }
   },

@@ -1,0 +1,21 @@
+<div>
+    <h2>Google Play Login</h2>
+  {{#if googleLoggedIn}}
+      <h4>Logged In</h4>
+      <button type="submit" class="btn btn-default" {{action "googleLogout"}}>Log Out</button>
+  {{else}}
+      <form>
+          <div class="form-group">
+              <label for="email">Email</label>
+            {{input value=email classNames="form-control" placeholder="Email"}}
+          </div>
+          <div class="form-group">
+              <label for="password">Password</label>
+            {{input value=password classNames="form-control" placeholder="Password" type="password"}}
+          </div>
+
+          <button type="submit" class="btn btn-default" {{action "googleLogin"}}>Log In</button>
+      </form>
+  {{/if}}
+    <p class="text-danger">{{googleError}}</p>
+</div>
