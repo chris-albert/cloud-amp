@@ -49,5 +49,6 @@ export default Ember.Component.extend({
   },
   didInsertElement() {
     this.setLibrary('cloudamp');
+    this.setSelected('cloudamp');
   }
 });
