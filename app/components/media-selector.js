@@ -7,6 +7,7 @@ export default Ember.Component.extend({
     onlineClick(source) {
       this.setLibrary(source);
       this.sendAction('libraryViewChanged','online');
+      this.setSelected(source);
     },
     onlineServicesClick() {
       var open = this.$('.online-services.open');
@@ -25,21 +26,23 @@ export default Ember.Component.extend({
         closed.find('.glyphicon').addClass('glyphicon-triangle-bottom');
         this.$('.selector-service').show();
       }
+      this.setSelected('online-services');
     },
     historyClicked() {
       this.sendAction('libraryViewChanged','history');
+      this.setSelected('history');
     },
     settingsClicked() {
       this.sendAction('libraryViewChanged','settings');
+      this.setSelected('settings');
     }
   },
   setSelected(source) {
-    this.$('.selector-service').removeClass('selected');
-    this.$('.selector-service.' + source).addClass('selected');
+    this.$('.selector-item').removeClass('selected');
+    this.$('.selector-item.' + source).addClass('selected');
   },
   setLibrary(source) {
     this.get('library').loadLibrary(source);
-    this.setSelected(source);
   },
   init() {
     this._super();
