@@ -4,6 +4,10 @@ import config from 'cloud-amp/config/environment';
 export default Ember.Service.extend({
   baseUrl: config.apiUrl,
   storage: Ember.inject.service('browser-cache'),
+  init() {
+    this.get('storage').setCache('cloudamp-token','it doesn\'t really matter.... anymore');
+    this._super();
+  },
   logout(source) {
     this.get('storage').deleteKey(source + '-token');
   },
