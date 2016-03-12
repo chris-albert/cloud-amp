@@ -92,7 +92,9 @@ export default Ember.Component.extend(Ember.Evented, {
   albums        : Ember.computed.func('ld.artists', 'artistSelected', function (artists, selected) {
     var artist = selected;
     if (artist) {
-      return artist.albums.concat(this.buildAll(artist.albums, 'albums', 'tracks'));
+      var all = this.buildAll(artist.albums, 'albums', 'tracks');
+      this.set('albumSelected',all);
+      return artist.albums.concat(all);
     }
   }),
   tracks        : Ember.computed.func('ld.artists', 'artistSelected', 'albumSelected',
