@@ -20,6 +20,7 @@ export default Ember.Component.extend(Ember.Evented, {
     artists: []
   },
   init() {
+    console.log('init');
     this.get('library');
     return this._super();
   },
@@ -65,7 +66,7 @@ export default Ember.Component.extend(Ember.Evented, {
       }
     }
   },
-  libraryWatcher: Ember.observer('library.library', function () {
+  libraryWatcher: Ember.on('init',Ember.observer('library.library', function () {
     var lib = this.get('library.library');
     Ember.run(() => {
       this.setLoading(true);
@@ -83,7 +84,7 @@ export default Ember.Component.extend(Ember.Evented, {
         this.set('albumSelected', []);
       }
     });
-  }),
+  })),
   artists       : Ember.computed.func('ld.artists', function (artists) {
     if (artists) {
       return artists.concat(this.buildAll(artists, 'artists', 'albums'));

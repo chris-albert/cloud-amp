@@ -33,7 +33,6 @@ export default Ember.Component.extend({
     }
   ],
   history       : Ember.computed.func('historyService.history', function (history) {
-    console.log(history);
     return history;
   })
 });
