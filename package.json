@@ -1,7 +1,7 @@
 {
   "name": "cloud-amp",
   "version": "0.0.0",
-  "description": "Small description for cloud-amp goes here",
+  "description": "Cloudamp is a winamp like interface for your cloud music",
   "private": true,
   "directories": {
     "doc": "doc",

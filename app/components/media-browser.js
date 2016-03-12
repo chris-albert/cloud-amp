@@ -3,7 +3,7 @@ import _ from 'lodash';
 import config from 'cloud-amp/config/environment';
 
 export default Ember.Component.extend({
-  classNames    : ['media-browser','row'],
+  classNames    : ['media-browser', 'row'],
   //Column mappings from configs
   artistColumns : config.columns.artist,
   albumColumns  : config.columns.album,
@@ -15,7 +15,8 @@ export default Ember.Component.extend({
   //Component variables
   artistSelected: null,
   albumSelected : null,
-  ld: {
+  libraryLoading: false,
+  ld            : {
     artists: []
   },
   actions       : {
@@ -46,12 +47,38 @@ export default Ember.Component.extend({
     _.map(tracks, track => playlist.addTrack(track));
     this.get('player').sourceChanged();
   },
-  libraryWatcher: Ember.computed.func('library.library',function(lib) {
-    this.set('ld',lib);
+  didRender() {
+    this._super(...arguments);
+    this.setLoading(false);
+  },
+  setLoading(loading) {
+    var el = this.$('.media-loading');
+    if (el) {
+      if (loading) {
+        el.show();
+      } else if (this.get('libraryLoading')){
+        this.set('libraryLoading',false);
+        el.hide();
+      }
+    }
+  },
+  libraryWatcher: Ember.computed.func('library.library', function (lib) {
+    Ember.run(() => {
+      this.setLoading(true);
+    });
+    Ember.run.next(() => {
+      this.set('libraryLoading',true);
+      this.set('ld', lib);
+      if (lib && lib.artists) {
+        var allArtists = this.buildAll(lib.artists, 'artists', 'albums');
+        this.set('artistSelected', allArtists);
+        this.set('albumSelected', this.buildAll(allArtists.albums, 'albums', 'tracks'));
+      }
+    });
     return '';
   }),
   artists       : Ember.computed.func('ld.artists', function (artists) {
-    if(artists) {
+    if (artists) {
       return artists.concat(this.buildAll(artists, 'artists', 'albums'));
     }
   }),
