@@ -1,8 +1,10 @@
 import Ember from 'ember';
 import _ from 'lodash';
+import config from 'cloud-amp/config/environment';
 
 export default Ember.Component.extend({
   library: Ember.inject.service('library'),
+  spotifyEnabled: config.spotify.enabled,
   actions: {
     onlineClick(source) {
       this.setLibrary(source);

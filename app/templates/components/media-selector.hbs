@@ -9,9 +9,11 @@
 <div class="selector-service selector-item google" {{action "onlineClick" "google"}}>
     <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> Google Play
 </div>
+{{#if spotifyEnabled}}
 <div class="selector-service selector-item spotify" {{action "onlineClick" "spotify"}}>
     <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> Spotify
 </div>
+{{/if}}
 <div class="selector-service selector-item cloudamp" {{action "onlineClick" "cloudamp"}}>
     <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> CloudAmp
 </div>

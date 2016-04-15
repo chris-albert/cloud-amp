@@ -20,7 +20,6 @@ export default Ember.Component.extend(Ember.Evented, {
     artists: []
   },
   init() {
-    console.log('init');
     this.get('library');
     return this._super();
   },

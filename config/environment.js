@@ -50,7 +50,7 @@ var columns = {
   track  : [
     {
       name   : 'trackNum',
-      display: 'Track Number'
+      display: 'Track #'
     },
     {
       name   : 'artist.name',
@@ -87,6 +87,11 @@ var columns = {
 
 module.exports = function(environment) {
   var ENV = {
+    spotify: {
+      authUrl: 'https://accounts.spotify.com/authorize',
+      clientId: 'bb0936b2d148469593ae174953e02e98',
+      enabled: false
+    },
     modulePrefix: 'cloud-amp',
     environment: environment,
     baseURL: '/',

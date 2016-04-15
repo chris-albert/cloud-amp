@@ -39,7 +39,7 @@ export default Ember.Service.extend({
   request(path, source) {
     return Ember.$.getJSON(this.get('baseUrl') + path,
       {
-        token: this.getToken(source),
+        token: encodeURIComponent(this.getToken(source)),
         source: source
       });
   },
