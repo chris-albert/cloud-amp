@@ -37,6 +37,49 @@ body {
 }
 
 /*
+ Tab container
+ */
+.tab-container {
+  height: 100%;
+}
+
+.tab-container .tabs {
+  background-color: black;
+  height: 30px;
+  padding-left: 5px;
+  padding-top: 8px;
+}
+
+.tab-container .tabs .tab {
+  color: rgb(196,196,196);
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 0 rgb(15,15,15);
+  background: linear-gradient(rgb(65,69,71),rgb(36,40,43),rgb(43,45,48));
+  padding: 5px 10px;
+  font-size: 11px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  cursor: pointer;
+}
+
+.tab-container .tabs .tab.selected {
+  color: rgb(220,220,220);
+  background: linear-gradient(rgb(91,98,103),rgb(38,42,42),rgb(38,42,42));
+}
+
+/*
+ Visualizations
+ */
+
+.visualizations {
+  height: 100%;
+  border: 5px solid #262A2A;
+  background-color: #090A0A;
+  color: #819FAB;
+}
+
+/*
  Media selector
 */
 .media-selector {

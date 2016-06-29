@@ -1,6 +1,17 @@
 <div class="header-components row">
-    {{media-player classNames="col-md-4"}}
-    {{now-playing-details classNames="col-md-4"}}
-    {{playlist-details classNames="col-md-4"}}
+  {{media-player classNames="col-md-4"}}
+  {{now-playing-details classNames="col-md-4"}}
+  {{playlist-details classNames="col-md-4"}}
 </div>
-{{media-library model=model}}
+<div class="tab-container">
+    <div class="tabs row">
+        <span class="tab {{if showMedia "selected"}} media" {{action "mediaClicked"}}>Media Library</span>
+        <span class="tab {{if showViz "selected"}} viz" {{action "vizClicked"}}>Visualization</span>
+    </div>
+  {{#if showMedia}}
+    {{media-library model=model}}
+  {{/if}}
+  {{#if showViz}}
+    {{visualizations-pane}}
+  {{/if}}
+</div>
