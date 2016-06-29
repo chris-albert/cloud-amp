@@ -1,3 +1,4 @@
+
 import Ember from 'ember';
 import textFormatters from '../utils/text-formatters';
 import HtmlPlayer from '../utils/html-player';
@@ -40,42 +41,49 @@ export default Ember.Service.extend(Ember.Evented,{
     var status = this.get('status');
     if (status === 'paused') {
       //This means we came from being paused, so just resume
-      this.get('audio').play();
+      this.handlePause();
     } else if (status === 'stopped') {
       //This means we came from being stopped, so set seek to 0 and play
       this.get('audio').seek(0);
       this.get('audio').play();
     } else {
       //This means we are coming in fresh or next in playlist, so start streaming
-      this.get('playlist').getCurrentTrack()
-        .then(t => {
-          var audio = this.get('audio');
-          audio.setAutoPlay(true);
-
-          audio.setSrc(t.stream.url);
-          this.set('almostDoneFired',false);
-          audio.on('canplay',() => {
-            this.trigger('playing');
-            if(time) {
-              audio.seek(time);
-            }
-          });
-          audio.on('error',(e) => {
-            this.audioError();
-          });
-        });
+      this.streamTrack(time);
     }
     this.set('status','playing');
   },
-  audioError() {
-    var i = 0,
-        self = this;
+  streamTrack(time) {
+    this.get('playlist').getCurrentTrack()
+      .then(t => {
+        var audio = this.get('audio');
+        audio.setAutoPlay(true);
+
+        audio.setSrc(t.stream.url);
+        this.set('almostDoneFired',false);
+        audio.one('canplay',() => {
+          this.trigger('playing');
+          if(time) {
+            audio.seek(time);
+          }
+        });
+        audio.on('error',(e) => {
+          this.audioError(e);
+        });
+      });
+  },
+  handlePause() {
+    //Since for GooglePlay the stream url times out, we need to get
+    //a new authenticated stream url after a pause
+    var ct = this.get('audio').currentTime();
+    this.get('playlist').unsetCurrentStreamUrl();
+    this.streamTrack(ct);
+  },
+  audioError(e) {
+    console.log("Audio Error: ");
+    console.log(e);
+    var self = this;
     return function() {
-      if(i < 1) {
         self.get('playlist').unsetCurrentStreamUrl();
-        self.sourceChanged(self.get('lastGoodTimeInSec'));
-        i++;
-      }
     }();
   },
   seek(value) {
@@ -107,9 +115,6 @@ export default Ember.Service.extend(Ember.Evented,{
           ct = this.get('audio').currentTime();
       this.set('currentTime', ct * 1000);
       this.set('bufferedTime',audio.bufferedTime() * 1000);
-      if(ct != 0) {
-        this.set('lastGoodTimeInSec',ct);
-      }
       if(audio.totalTime() && audio.totalTime() - 20 < ct && !this.get('almostDoneFired')) {
         this.get('playlist').cacheNextStreamUrl();
         this.set('almostDoneFired',true);

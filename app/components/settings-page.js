@@ -28,6 +28,9 @@ export default Ember.Component.extend({
     spotifyLogout() {
       this.get('spotify').logout();
       this.set('spotifyLoggedIn',false);
+    },
+    googleCacheClear() {
+      this.get('google').clearCache();
     }
   },
   init() {

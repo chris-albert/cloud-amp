@@ -33,6 +33,9 @@ export default Ember.Service.extend({
       });
     }
   },
+  clearCache() {
+    return this.request('/library/clear');
+  },
   request(path) {
     return Ember.$.getJSON(this.get('baseUrl') + path,
       {token: this.getToken()});
