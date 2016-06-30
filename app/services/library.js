@@ -16,6 +16,9 @@ export default Ember.Service.extend({
   setCachedLibrary(name, library) {
     this.set('libraries.' + name, library);
   },
+  unCacheLibrary(name) {
+    this.set('libraries.' + name, null);
+  },
   loadLibrary(name) {
     var lib = this.getCachedLibrary(name);
     if (lib) {

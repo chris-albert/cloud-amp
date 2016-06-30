@@ -8,6 +8,7 @@ export default Ember.Component.extend({
   spotifyLoggedIn: false,
   google: Ember.inject.service('google-play-resource'),
   spotify: Ember.inject.service('spotify-resource'),
+  library: Ember.inject.service('library'),
   spotifyEnabled: config.spotify.enabled,
   actions: {
     googleLogin() {
@@ -30,7 +31,7 @@ export default Ember.Component.extend({
       this.set('spotifyLoggedIn',false);
     },
     googleCacheClear() {
-      this.get('google').clearCache();
+      this.get('library').unCacheLibrary('google');
     }
   },
   init() {
