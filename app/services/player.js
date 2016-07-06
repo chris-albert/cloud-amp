@@ -49,35 +49,44 @@ export default Ember.Service.extend(Ember.Evented,{
       this.get('audio').play();
     } else {
       //This means we are coming in fresh or next in playlist, so start streaming
-      this.streamTrack(time);
+      this.stream(time);
     }
     this.set('status','playing');
   },
-  streamTrack(time) {
+  stream(time) {
     this.get('playlist').getCurrentTrack()
       .then(t => {
-        var audio = this.get('audio');
-        audio.setAutoPlay(true);
-
-        audio.setSrc(t.stream.url);
-        this.set('almostDoneFired',false);
-        audio.one('canplay',() => {
-          this.trigger('playing');
-          if(time) {
-            audio.seek(time);
-          }
-        });
-        audio.on('error',(e) => {
-          this.audioError(e);
-        });
+        this.streamTrack(t,time);
       });
+  },
+  streamTrack(track, time) {
+    var audio = this.get('audio');
+    audio.setAutoPlay(true);
+
+    audio.setSrc(track.stream.url);
+    this.set('almostDoneFired',false);
+    audio.one('canplay',() => {
+      this.trigger('playing');
+      if(time) {
+        audio.seek(time);
+      }
+    });
+    audio.on('error',(e) => {
+      this.audioError(e);
+    });
+  },
+  preloadTrack(track) {
+    console.log('preload track');
+    var audio = AudioContextPlayer.create();
+    audio.setAutoPlay(false);
+    audio.setSrc(track.stream.url);
   },
   handlePause() {
     //Since for GooglePlay the stream url times out, we need to get
     //a new authenticated stream url after a pause
     var ct = this.get('audio').currentTime();
     this.get('playlist').unsetCurrentStreamUrl();
-    this.streamTrack(ct);
+    this.stream(ct);
   },
   audioError(e) {
     console.log("Audio Error: ");
@@ -117,10 +126,19 @@ export default Ember.Service.extend(Ember.Evented,{
       this.set('currentTime', ct * 1000);
       this.set('bufferedTime',audio.bufferedTime() * 1000);
       if(audio.totalTime() && audio.totalTime() - 20 < ct && !this.get('almostDoneFired')) {
-        this.get('playlist').cacheNextStreamUrl();
-        this.set('almostDoneFired',true);
+        this.handleNext();
       }
     }, 500);
+  },
+  handleNext() {
+    var nextTrack = this.get('playlist').cacheNextStreamUrl();
+      //if(nextTrack) {
+      //  nextTrack.then(track => {
+      //    console.log(track);
+      //    this.preloadTrack(track);
+      //  });
+      //}
+    this.set('almostDoneFired',true);
   },
   stopUpdater() {
     clearInterval(this.timeInterval);

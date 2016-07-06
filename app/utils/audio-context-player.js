@@ -6,6 +6,7 @@ export default Ember.Object.extend(Ember.Evented,{
   audio: null,
   volume: 100,
   muted: false,
+  autoPlay: false,
   init() {
 
   },
@@ -36,7 +37,7 @@ export default Ember.Object.extend(Ember.Evented,{
     var audio = new Audio();
     audio.crossOrigin = "anonymous";
     audio.src = url;
-    audio.autoplay = true;
+    audio.autoplay = this.get('autoPlay');
     audio.preload = 'auto';
     audio.volume = this.get('volume') / 100;
     audio.muted = this.get('muted');
@@ -104,5 +105,6 @@ export default Ember.Object.extend(Ember.Evented,{
     return 0;
   },
   setAutoPlay(ap) {
+    this.set('autoPlay', ap);
   }
 });

@@ -128,7 +128,7 @@ export default Ember.Service.extend({
   },
   cacheNextStreamUrl() {
     if(this.get('currentPosition') + 1 < this.get('tracks').length) {
-      this.getStreamUrl(this.get('tracks')[this.get('currentPosition') + 1]);
+      return this.getStreamUrl(this.get('tracks')[this.get('currentPosition') + 1]);
     }
   },
   getRandomIntInclusive(min, max) {
