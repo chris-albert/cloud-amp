@@ -3,6 +3,7 @@ import Ember from 'ember';
 import textFormatters from '../utils/text-formatters';
 import HtmlPlayer from '../utils/html-player';
 import AudioContextPlayer from '../utils/audio-context-player';
+import AudioContextPlayerRaw from '../utils/audio-context-player-raw';
 import FakePlayer from '../utils/fake-player';
 
 export default Ember.Service.extend(Ember.Evented,{
