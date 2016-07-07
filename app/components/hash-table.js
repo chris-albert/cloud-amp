@@ -45,5 +45,8 @@ export default Ember.Component.extend({
       this.set('items',this.sorted(items,this.get('sortBy')));
     }
     return items;
-  })
+  }),
+  didInsertElement() {
+    Ps.initialize(this.$()[0]);
+  }
 });
