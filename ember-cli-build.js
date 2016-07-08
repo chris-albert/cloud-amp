@@ -19,5 +19,10 @@ module.exports = function(defaults) {
   //Jquery DataTables
   app.import(app.bowerDirectory + '/datatables.net/js/jquery.dataTables.min.js');
 
+  //JQuery custom scroller
+  //http://manos.malihu.gr/jquery-custom-content-scroller/
+  app.import(app.bowerDirectory + '/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js');
+  app.import(app.bowerDirectory + '/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css');
+  app.import(app.bowerDirectory + '/malihu-custom-scrollbar-plugin/mCSB_buttons.png');
   return app.toTree();
 };

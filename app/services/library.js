@@ -6,6 +6,7 @@ export default Ember.Service.extend({
   mediaResource: Ember.inject.service('media-resource'),
   libraries    : null,
   library      : null,
+  storage      : Ember.inject.service('browser-cache'),
   allLibraries : [
     'google',
     'cloudamp'
@@ -14,7 +15,9 @@ export default Ember.Service.extend({
     this.set('libraries', {});
   },
   setCachedLibrary(name, library) {
-    this.set('libraries.' + name, library);
+    var libName = 'libraries.' + name;
+    this.set(libName, library);
+    //this.get('storage').setJsonCache(libName,library);
   },
   unCacheLibrary(name) {
     this.set('libraries.' + name, null);
@@ -28,7 +31,12 @@ export default Ember.Service.extend({
     }
   },
   getCachedLibrary(name) {
-    return this.get('libraries.' + name);
+    var libName = 'libraries.' + name;
+    var lib = this.get(libName);
+    if(!lib) {
+      //lib = this.get('storage').getJsonCache(libName);
+    }
+    return lib;
   },
   setCurrentLibrary(name) {
     this.set('library', this.getCachedLibrary(name));

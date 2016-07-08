@@ -47,6 +47,14 @@ export default Ember.Component.extend({
     return items;
   }),
   didInsertElement() {
-    Ps.initialize(this.$()[0]);
+    //Ps.initialize(this.$()[0]);
+    this.$().mCustomScrollbar({
+      theme: 'cloudamp',
+      axis:'y',
+      alwaysShowScrollbar: 2,
+      scrollButtons: {
+        enable: true
+      }
+    });
   }
 });
