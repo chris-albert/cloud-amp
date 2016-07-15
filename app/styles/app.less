@@ -231,7 +231,8 @@ body {
   width: 100%;
   opacity: 0.6;
   background-color: black;
-  z-index: 1000;
+  position: relative;
+  z-index: 10;
 }
 
 .media-loading span {
@@ -437,21 +438,30 @@ body {
 
 @rail-background-color: rgb(20,21,22);
 
+.dragger_bar {
+  width: 100%;
+  .button-shadow();
+  background-image: url("../assets/images/cloudamp-scroll-hamburger.png"), @button-gradient;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .mCS-cloudamp {
+  //Make all actions on the dragger_bar the same, we don't want it
+  //changing when you hover or activate it
   .mCSB_dragger {
     .mCSB_dragger_bar {
-      width: 100%;
-      .button-shadow();
+      .dragger_bar();
     }
   }
   .mCSB_dragger:hover {
     .mCSB_dragger_bar {
-      background: @button-gradient;
+      .dragger_bar();
     }
   }
   .mCSB_dragger:active {
     .mCSB_dragger_bar {
-      background: @button-gradient;
+      .dragger_bar();
     }
   }
   .mCSB_scrollTools {
@@ -478,11 +488,17 @@ body {
   .mCSB_buttonUp {
     .button-shadow();
     height: 15px;
+    background-image: url("../assets/images/cloudamp-up-arrow.png"), @button-gradient;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   .mCSB_buttonDown {
     .button-shadow();
     height: 15px;
+    background-image: url("../assets/images/cloudamp-down-arrow.png"), @button-gradient;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
 

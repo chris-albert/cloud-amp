@@ -17,6 +17,7 @@ module.exports = function(defaults) {
   app.import(app.bowerDirectory + '/perfect-scrollbar/css/perfect-scrollbar.min.css');
 
   //Jquery DataTables
+  //https://datatables.net/
   app.import(app.bowerDirectory + '/datatables.net/js/jquery.dataTables.min.js');
 
   //JQuery custom scroller

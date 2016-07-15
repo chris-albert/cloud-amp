@@ -56,5 +56,13 @@ export default Ember.Component.extend({
         enable: true
       }
     });
+    //this.$('table').DataTable({
+    //  paging:   false,
+    //  ordering: false,
+    //  info:     false,
+    //  filter:   false,
+    //  scrollCollapse: true,
+    //  scrollY       : '100%'
+    //});
   }
 });
