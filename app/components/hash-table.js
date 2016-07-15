@@ -47,22 +47,14 @@ export default Ember.Component.extend({
     return items;
   }),
   didInsertElement() {
-    //Ps.initialize(this.$()[0]);
     this.$().mCustomScrollbar({
       theme: 'cloudamp',
-      axis:'y',
-      alwaysShowScrollbar: 2,
+      axis:'xy',
+      setWidth: true,
+      alwaysShowScrollbar: 0,
       scrollButtons: {
         enable: true
       }
     });
-    //this.$('table').DataTable({
-    //  paging:   false,
-    //  ordering: false,
-    //  info:     false,
-    //  filter:   false,
-    //  scrollCollapse: true,
-    //  scrollY       : '100%'
-    //});
   }
 });

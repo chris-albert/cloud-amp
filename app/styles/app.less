@@ -440,6 +440,7 @@ body {
 
 .dragger_bar {
   width: 100%;
+  height: 100%;
   .button-shadow();
   background-image: url("../assets/images/cloudamp-scroll-hamburger.png"), @button-gradient;
   background-repeat: no-repeat;
@@ -447,23 +448,6 @@ body {
 }
 
 .mCS-cloudamp {
-  //Make all actions on the dragger_bar the same, we don't want it
-  //changing when you hover or activate it
-  .mCSB_dragger {
-    .mCSB_dragger_bar {
-      .dragger_bar();
-    }
-  }
-  .mCSB_dragger:hover {
-    .mCSB_dragger_bar {
-      .dragger_bar();
-    }
-  }
-  .mCSB_dragger:active {
-    .mCSB_dragger_bar {
-      .dragger_bar();
-    }
-  }
   .mCSB_scrollTools {
     background-color: @rail-background-color;
     opacity: 1;
@@ -472,34 +456,91 @@ body {
     .mCSB_draggerRail {
       background-color: @rail-background-color;
     }
-
     .mCSB_draggerContainer {
       margin: 16px 0;
     }
   }
+
+  //Make all actions on the dragger_bar the same, we don't want it
+  //changing when you hover or activate it
+  .mCSB_scrollTools {
+    .mCSB_draggerContainer {
+      .mCSB_dragger {
+        .mCSB_dragger_bar {
+          .dragger_bar();
+        }
+      }
+      .mCSB_dragger:hover {
+        .mCSB_dragger_bar {
+          .dragger_bar();
+        }
+      }
+      .mCSB_dragger:active {
+        .mCSB_dragger_bar {
+          .dragger_bar();
+        }
+      }
+    }
+  }
+
+  .mCSB_scrollTools.mCSB_scrollTools_horizontal {
+    .mCSB_draggerContainer {
+      margin: 0 15px;
+      .mCSB_dragger {
+        max-width: 100%;
+        .mCSB_dragger_bar {
+          margin: 0;
+          background-image: url("../assets/images/cloudamp-scroll-horizontal-hamburger.png"), @button-gradient;
+        }
+      }
+    }
+  }
+
   .mCSB_container {
     padding-right: 0;
     margin-right: 16px;
+    padding-bottom: 16px;
   }
   .mCSB_container_wrapper {
     margin-right: 0;
+    margin-bottom: 0;
   }
 
-  .mCSB_buttonUp {
-    .button-shadow();
-    height: 15px;
-    background-image: url("../assets/images/cloudamp-up-arrow.png"), @button-gradient;
-    background-repeat: no-repeat;
-    background-position: center;
+  .mCSB_scrollTools_vertical {
+    .mCSB_buttonUp {
+      .button-shadow();
+      height: 15px;
+      width: 15px;
+      background-image: url("../assets/images/cloudamp-up-arrow.png"), @button-gradient;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .mCSB_buttonDown {
+      .button-shadow();
+      height: 15px;
+      background-image: url("../assets/images/cloudamp-down-arrow.png"), @button-gradient;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
   }
 
-  .mCSB_buttonDown {
-    .button-shadow();
-    height: 15px;
-    background-image: url("../assets/images/cloudamp-down-arrow.png"), @button-gradient;
-    background-repeat: no-repeat;
-    background-position: center;
+  .mCSB_scrollTools_horizontal {
+    .mCSB_buttonRight {
+      .button-shadow();
+      height: 15px;
+      width: 15px;
+      background-image: url("../assets/images/cloudamp-right-arrow.png"), @button-gradient;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .mCSB_buttonLeft {
+      .button-shadow();
+      height: 15px;
+      width: 15px;
+      background-image: url("../assets/images/cloudamp-left-arrow.png"), @button-gradient;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
   }
-
 
 }
