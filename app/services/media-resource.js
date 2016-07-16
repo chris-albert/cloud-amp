@@ -53,6 +53,9 @@ export default Ember.Service.extend({
         return d;
       });
   },
+  search(query) {
+    return this.request('/search?query=' + query,'google');
+  },
   incrementPlayCount(source, id) {
     return this.request('/count/' + id, source)
       .then(d => {

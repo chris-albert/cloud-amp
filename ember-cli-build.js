@@ -10,6 +10,10 @@ module.exports = function(defaults) {
   app.import(app.bowerDirectory + '/jquery-ui/ui/widget.js');
   app.import(app.bowerDirectory + '/jquery-ui/ui/mouse.js');
   app.import(app.bowerDirectory + '/jquery-ui/ui/slider.js');
+  app.import(app.bowerDirectory + '/jquery-ui/ui/widget.js');
+  app.import(app.bowerDirectory + '/jquery-ui/ui/position.js');
+  app.import(app.bowerDirectory + '/jquery-ui/ui/menu.js');
+  app.import(app.bowerDirectory + '/jquery-ui/ui/autocomplete.js');
   app.import(app.bowerDirectory + '/jquery-ui/themes/base/jquery-ui.min.css');
 
   //Perfect scrollbar

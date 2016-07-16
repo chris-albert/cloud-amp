@@ -43,7 +43,26 @@ export default Ember.Component.extend(Ember.Evented, {
     },
     trackDoubleClicked(track) {
       this.changePlaylist([track]);
+    },
+    clearSearch() {
+      this.$('.search-box').val('');
+    },
+    search(t) {
+      //console.log(t);
+      //this.get('library').search(t);
     }
+  },
+  didInsertElement() {
+    //var self = this,
+    //  searchBox = this.$('.search-box');
+    //searchBox.autocomplete({
+    //  source(req,res) {
+    //    self.get('library').search(req.term)
+    //      .then(data => {
+    //        res(data);
+    //      });
+    //  }
+    //});
   },
   changePlaylist(tracks) {
     var playlist = this.get('playlist');

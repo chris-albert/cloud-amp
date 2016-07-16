@@ -86,6 +86,9 @@ export default Ember.Service.extend({
       });
     });
   },
+  search(query) {
+    return this.get('mediaResource').search(query);
+  },
   /**
    * We would like that each artist and track point to their respective owners,
    * so we can easily climb back up the stack

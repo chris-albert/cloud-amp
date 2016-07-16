@@ -2,8 +2,22 @@ body, html {
   height: 100%;
 }
 
+.disable-glow {
+  outline-color: transparent;
+  outline-style: none;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+  .disable-glow();
+}
+
+input:focus, input:active:focus, input.active:focus {
+  .disable-glow();
+}
+
 @button-gradient: linear-gradient(180deg,rgb(229,229,229),rgb(130,130,130));
 @dark-border: rgb(9,8,8);
+@dark-background: rgb(8,9,10);
 
 /*
  list background/divider: 9,10,10 - 090A0A
@@ -43,6 +57,24 @@ body {
 
 .media-tables {
   height: 100%;
+  .media-search {
+    color: rgb(210,210,210);
+    font-size: 12px;
+    margin-top: 5px;
+    display: flex;
+    input.search-box {
+      background-color: @dark-background;
+      border: none;
+      flex-grow: 1;
+      margin: 0 5px;
+    }
+    .clear-search-button {
+      .button-shadow();
+      font-size: 12px;
+      line-height: 10px;
+      padding: 0 5px;
+    }
+  }
 }
 
 /*
@@ -433,6 +465,7 @@ body {
   border-top-color: rgb(231,231,231);
   border-bottom-color: rgb(100,100,100);
   opacity: 1;
+  color: @dark-background;
 }
 
 
