@@ -4,6 +4,7 @@ import textFormatters from '../utils/text-formatters';
 import HtmlPlayer from '../utils/html-player';
 import AudioContextPlayer from '../utils/audio-context-player';
 import AudioContextPlayerRaw from '../utils/audio-context-player-raw';
+import AudioContextPlayerAurora from '../utils/audio-context-player-aurora';
 import FakePlayer from '../utils/fake-player';
 
 export default Ember.Service.extend(Ember.Evented,{
@@ -15,7 +16,7 @@ export default Ember.Service.extend(Ember.Evented,{
   timeInterval: null,
   almostDoneFired: false,
   init() {
-    this.set('audio', AudioContextPlayer.create());
+    this.set('audio', AudioContextPlayerAurora.create());
     this.get('audio').on('ended', () => {
       this.audioEnded();
     });

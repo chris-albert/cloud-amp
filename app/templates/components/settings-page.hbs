@@ -28,4 +28,24 @@
       <a href="{{spotifyUrl}}">Login with spotify.</a>
     {{/if}}
   {{/if}}
+  {{#if tidalEnabled}}
+      <h2>Tidal Login</h2>
+    {{#if tidalLoggedIn}}
+        <h4>Logged In</h4>
+        <button type="submit" class="btn btn-default" {{action "tidalLogout"}}>Log Out</button>
+    {{else}}
+        <form>
+            <div class="form-group">
+                <label for="email">Email</label>
+              {{input value=email classNames="form-control" placeholder="Email"}}
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+              {{input value=password classNames="form-control" placeholder="Password" type="password"}}
+            </div>
+
+            <button type="submit" class="btn btn-default" {{action "tidalLogin"}}>Log In</button>
+        </form>
+    {{/if}}
+  {{/if}}
 </div>

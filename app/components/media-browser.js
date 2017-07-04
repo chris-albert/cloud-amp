@@ -48,8 +48,8 @@ export default Ember.Component.extend(Ember.Evented, {
       this.$('.search-box').val('');
     },
     search(t) {
-      //console.log(t);
-      //this.get('library').search(t);
+      console.log(t);
+      this.get('library').search(t);
     }
   },
   didInsertElement() {

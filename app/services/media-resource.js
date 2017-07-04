@@ -37,11 +37,15 @@ export default Ember.Service.extend({
     }
   },
   request(path, source) {
-    return Ember.$.getJSON(this.get('baseUrl') + path,
-      {
-        token: encodeURIComponent(this.getToken(source)),
-        source: source
-      });
+    var params = {
+      token: encodeURIComponent(this.getToken(source)),
+      source: source
+    };
+    // This is bad since this service is supposed to be generic
+    if(source === 'tidal') {
+      params.userId = this.get('storage').getCache('tidal-user-id');
+    }
+    return Ember.$.getJSON(this.get('baseUrl') + path, params);
   },
   getLibrary(source) {
     return this.request('/library', source);

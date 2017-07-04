@@ -5,6 +5,7 @@ import config from 'cloud-amp/config/environment';
 export default Ember.Component.extend({
   library: Ember.inject.service('library'),
   spotifyEnabled: config.spotify.enabled,
+  tidalEnabled: config.tidal.enabled,
   actions: {
     onlineClick(source) {
       this.setLibrary(source);

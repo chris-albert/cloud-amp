@@ -21,6 +21,7 @@
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
     "ember-bootstrap": "0.6.0",
+    "ember-browserify": "^1.1.13",
     "ember-cli": "1.13.13",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-babel": "^5.1.5",
@@ -42,7 +43,13 @@
     "ember-lodash": "0.0.6"
   },
   "dependencies": {
+    "av": "^0.4.9",
+    "flac": "^0.3.0",
+    "flac.js": "^0.2.1",
     "moment": "^2.11.1",
+    "mp3": "^0.1.0",
+    "mp3.js": "^0.2.0",
+    "ogg.js": "^0.1.0",
     "query-string": "^3.0.0",
     "querystring": "^0.2.0"
   }

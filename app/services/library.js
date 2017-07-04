@@ -9,7 +9,8 @@ export default Ember.Service.extend({
   storage      : Ember.inject.service('browser-cache'),
   allLibraries : [
     'google',
-    'cloudamp'
+    'cloudamp',
+    'tidal'
   ],
   init() {
     this.set('libraries', {});
