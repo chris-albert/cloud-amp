@@ -7,7 +7,8 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('index' ,{path: '/'});
-  this.route('spotify',{path: '/auth/spotify'});
+  this.route('library');
+  this.route('visualization');
 });
 
 export default Router;

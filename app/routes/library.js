@@ -2,9 +2,6 @@ import Ember from 'ember';
 import _ from 'lodash';
 
 export default Ember.Route.extend({
-  beforeModel() {
-    this.transitionTo('library');
-  },
   model() {
     return {
       artists: []

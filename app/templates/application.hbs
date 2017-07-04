@@ -1,3 +1,18 @@
 <div class="container-fluid main-container">
+  <div class="header-components row">
+    {{media-player classNames="col-md-4"}}
+    {{now-playing-details classNames="col-md-4"}}
+    {{playlist-details classNames="col-md-4"}}
+  </div>
+  <div class="tab-container">
+    <div class="tabs row">
+      {{#link-to "library"}}
+        <span class="tab {{if showMedia "selected"}} media" >Media Library</span>
+      {{/link-to}}
+      {{#link-to "visualization"}}
+        <span class="tab {{if showViz "selected"}} viz">Visualization</span>
+      {{/link-to}}
+    </div>
     {{outlet}}
+  </div>
 </div>

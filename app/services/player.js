@@ -16,7 +16,7 @@ export default Ember.Service.extend(Ember.Evented,{
   timeInterval: null,
   almostDoneFired: false,
   init() {
-    this.set('audio', AudioContextPlayerAurora.create());
+    this.set('audio', AudioContextPlayer.create());
     this.get('audio').on('ended', () => {
       this.audioEnded();
     });
