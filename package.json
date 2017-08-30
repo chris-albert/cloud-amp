@@ -57,6 +57,7 @@
     "mp3": "^0.1.0",
     "mp3.js": "^0.2.0",
     "ogg.js": "^0.1.0",
+    "perfect-scrollbar": "^0.8.0",
     "query-string": "^3.0.0",
     "querystring": "^0.2.0"
   }

@@ -14,7 +14,9 @@
     "loader.js": "ember-cli/loader.js#3.4.0",
     "qunit": "~1.20.0",
     "bootstrap": "~3.3.5",
-    "datatables.net": "~1.10.12"
+    "datatables.net": "~1.10.12",
+    "perfect-scrollbar": "^0.8.0",
+    "malihu-custom-scrollbar-plugin": "^3.1.5"
   },
   "resolutions": {
     "ember": "2.3.0"

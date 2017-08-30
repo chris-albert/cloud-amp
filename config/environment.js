@@ -115,7 +115,7 @@ module.exports = function(environment) {
     }
   };
 
-  // if (environment === 'production') {
+  if (environment === 'production') {
     ENV.apiUrl = 'http://api.cloudamp.io';
     ENV.incrementPlayCount = true;
     ENV.contentSecurityPolicy =  {
@@ -124,7 +124,7 @@ module.exports = function(environment) {
         'img-src': "'self' *",
         'style-src': "'self' 'unsafe-inline'"
     };
-  // }
+  }
 
   return ENV;
 };
