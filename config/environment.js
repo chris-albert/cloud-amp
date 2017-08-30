@@ -98,7 +98,8 @@ module.exports = function(environment) {
     modulePrefix: 'cloud-amp',
     environment: environment,
     baseURL: '/',
-    locationType: 'auto',
+
+    locationType: 'hash',
     EmberENV: {
       FEATURES: {}
     },
